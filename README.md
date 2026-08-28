@@ -71,6 +71,9 @@ paper was verified against*, which a copy silently loses the moment either side 
 The import closure is **41 modules, about 78,000 lines**: 23 here and 18 from the companion, and
 those 18 are exactly that paper's frozen closure.
 
+The companion repository is **public**, so this dependency resolves for anyone; no credentials are
+needed to build.
+
 ⚠ **A git dependency has a failure mode a copy does not**: rename the account, move the repository or
 lose the tag and the build stops reproducing. That is a real risk on the horizon a verification
 artifact is for. A self-contained frozen snapshot — every dependency vendored at its pinned revision,

@@ -16,7 +16,7 @@ maxSynthPendingDepth = 3
 # moment either side is corrected.  See README, "How this repository is put together".
 [[require]]
 name = "brualdi_lean"
-git = "git@github-jbaggett:jbaggett/brualdi-interchange-lean.git"
+git = "https://github.com/jbaggett/brualdi-interchange-lean.git"
 rev = "arxiv-v3"
 subDir = "brualdi_lean"
 
