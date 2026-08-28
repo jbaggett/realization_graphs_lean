@@ -1,0 +1,39 @@
+name = "realization_graphs_lean"
+version = "0.1.0"
+keywords = ["math"]
+defaultTargets = ["Realization"]
+
+[leanOptions]
+pp.unicode.fun = true
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+maxSynthPendingDepth = 3
+
+# The companion paper's Lean development, pinned to the tag its arXiv submission cites.
+# Depending rather than vendoring is deliberate: the tag is already the citable artifact for that
+# paper, so this links two papers to one immutable object instead of creating a second copy, and it
+# records WHICH version this paper was verified against — which a vendored copy silently loses the
+# moment either side is corrected.  See README, "How this repository is put together".
+[[require]]
+name = "brualdi_lean"
+git = "git@github-jbaggett:jbaggett/brualdi-interchange-lean.git"
+rev = "arxiv-v3"
+subDir = "brualdi_lean"
+
+# The ten roots are exactly the `Realization` target of the working tree, so the module set built
+# here is the module set the paper's gates audit — 23 modules of ours, 18 from the companion.
+[[lean_lib]]
+name = "Realization"
+srcDir = "."
+roots = [
+  "BrualdiLean.RealizationGraph.TheoremOne",
+  "BrualdiLean.RealizationGraph.SequelWave1",
+  "BrualdiLean.RealizationGraph.SeparatorTheorem",
+  "BrualdiLean.RealizationGraph.LayeredBase",
+  "BrualdiLean.RealizationGraph.InterfaceSaturation",
+  "BrualdiLean.RealizationGraph.TriangleProjection",
+  "BrualdiLean.RealizationGraph.LayerCapacity",
+  "BrualdiLean.RealizationGraph.PathWalks3",
+  "BrualdiLean.RealizationGraph.QStar",
+  "BrualdiLean.RealizationGraph.SBPlusOrd",
+]
