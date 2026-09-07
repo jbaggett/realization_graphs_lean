@@ -1,0 +1,118 @@
+# pinned output of compute/quotient_matroid_witness_bruteforce.py, run 2026-09-07
+
+{
+  "degrees": [
+    3,
+    2,
+    2,
+    2,
+    1
+  ],
+  "pivot": 1,
+  "realization_count": 6,
+  "family": [
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      2,
+      3
+    ]
+  ],
+  "fiber_sizes": {
+    "[0, 2]": 2,
+    "[0, 3]": 2,
+    "[0, 4]": 1,
+    "[2, 3]": 1
+  },
+  "loops": [],
+  "coloops": [],
+  "exchange_failure": {
+    "B": [
+      0,
+      4
+    ],
+    "C": [
+      2,
+      3
+    ],
+    "e": 0,
+    "candidates": [
+      {
+        "set": [
+          2,
+          4
+        ],
+        "realizable": false
+      },
+      {
+        "set": [
+          3,
+          4
+        ],
+        "realizable": false
+      }
+    ]
+  },
+  "actual_quotient_edges": [
+    [
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    [
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        4
+      ]
+    ],
+    [
+      [
+        0,
+        2
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    [
+      [
+        0,
+        4
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    [
+      [
+        2,
+        3
+      ],
+      [
+        0,
+        3
+      ]
+    ]
+  ]
+}

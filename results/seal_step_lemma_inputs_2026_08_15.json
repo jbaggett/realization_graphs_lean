@@ -1,0 +1,1718 @@
+{
+  "calibration": "Finite exhaustive computational support for a lead-written proof; this output is not itself a proof.",
+  "counts": {
+    "by_n_k": [
+      {
+        "biconditional": {
+          "configurations": 2,
+          "exception_configurations": 0,
+          "exception_valid_absent": 0,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 1,
+          "non_exception_configurations": 2,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 2,
+          "valid_absent": 0,
+          "valid_exists": 2,
+          "violations": 0
+        },
+        "k": 1,
+        "k_sets": 2,
+        "lemma_1": {
+          "at_least_two_element_families": 1,
+          "family_instances": 2,
+          "gale_comparisons": 1,
+          "three_element_families": 0,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 0,
+          "family_instances": 2,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 0,
+          "distinct_hook_families_converse_checked": 0,
+          "family_instances": 2,
+          "hook_parameter_cases_converse_checked": 0,
+          "violations": 0
+        },
+        "n": 2,
+        "runtime_seconds": 4.4e-05,
+        "shifted_families": 2
+      },
+      {
+        "biconditional": {
+          "configurations": 8,
+          "exception_configurations": 0,
+          "exception_valid_absent": 0,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 4,
+          "non_exception_configurations": 8,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 8,
+          "valid_absent": 0,
+          "valid_exists": 8,
+          "violations": 0
+        },
+        "k": 1,
+        "k_sets": 3,
+        "lemma_1": {
+          "at_least_two_element_families": 2,
+          "family_instances": 3,
+          "gale_comparisons": 3,
+          "three_element_families": 1,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 0,
+          "family_instances": 3,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 0,
+          "distinct_hook_families_converse_checked": 0,
+          "family_instances": 3,
+          "hook_parameter_cases_converse_checked": 0,
+          "violations": 0
+        },
+        "n": 3,
+        "runtime_seconds": 6.7e-05,
+        "shifted_families": 3
+      },
+      {
+        "biconditional": {
+          "configurations": 8,
+          "exception_configurations": 0,
+          "exception_valid_absent": 0,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 4,
+          "non_exception_configurations": 8,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 8,
+          "valid_absent": 0,
+          "valid_exists": 8,
+          "violations": 0
+        },
+        "k": 2,
+        "k_sets": 3,
+        "lemma_1": {
+          "at_least_two_element_families": 2,
+          "family_instances": 3,
+          "gale_comparisons": 3,
+          "three_element_families": 1,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 0,
+          "family_instances": 3,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 0,
+          "distinct_hook_families_converse_checked": 0,
+          "family_instances": 3,
+          "hook_parameter_cases_converse_checked": 0,
+          "violations": 0
+        },
+        "n": 3,
+        "runtime_seconds": 6.2e-05,
+        "shifted_families": 3
+      },
+      {
+        "biconditional": {
+          "configurations": 20,
+          "exception_configurations": 0,
+          "exception_valid_absent": 0,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 10,
+          "non_exception_configurations": 20,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 20,
+          "valid_absent": 0,
+          "valid_exists": 20,
+          "violations": 0
+        },
+        "k": 1,
+        "k_sets": 4,
+        "lemma_1": {
+          "at_least_two_element_families": 3,
+          "family_instances": 4,
+          "gale_comparisons": 6,
+          "three_element_families": 1,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 0,
+          "family_instances": 4,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 0,
+          "distinct_hook_families_converse_checked": 0,
+          "family_instances": 4,
+          "hook_parameter_cases_converse_checked": 0,
+          "violations": 0
+        },
+        "n": 4,
+        "runtime_seconds": 0.000201,
+        "shifted_families": 4
+      },
+      {
+        "biconditional": {
+          "configurations": 88,
+          "exception_configurations": 2,
+          "exception_valid_absent": 2,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 38,
+          "non_exception_configurations": 86,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 86,
+          "valid_absent": 2,
+          "valid_exists": 86,
+          "violations": 0
+        },
+        "k": 2,
+        "k_sets": 6,
+        "lemma_1": {
+          "at_least_two_element_families": 6,
+          "family_instances": 7,
+          "gale_comparisons": 17,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 1,
+          "family_instances": 7,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 1,
+          "distinct_hook_families_converse_checked": 1,
+          "family_instances": 7,
+          "hook_parameter_cases_converse_checked": 1,
+          "violations": 0
+        },
+        "n": 4,
+        "runtime_seconds": 0.000495,
+        "shifted_families": 7
+      },
+      {
+        "biconditional": {
+          "configurations": 20,
+          "exception_configurations": 0,
+          "exception_valid_absent": 0,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 10,
+          "non_exception_configurations": 20,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 20,
+          "valid_absent": 0,
+          "valid_exists": 20,
+          "violations": 0
+        },
+        "k": 3,
+        "k_sets": 4,
+        "lemma_1": {
+          "at_least_two_element_families": 3,
+          "family_instances": 4,
+          "gale_comparisons": 6,
+          "three_element_families": 1,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 0,
+          "family_instances": 4,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 0,
+          "distinct_hook_families_converse_checked": 0,
+          "family_instances": 4,
+          "hook_parameter_cases_converse_checked": 0,
+          "violations": 0
+        },
+        "n": 4,
+        "runtime_seconds": 0.000131,
+        "shifted_families": 4
+      },
+      {
+        "biconditional": {
+          "configurations": 40,
+          "exception_configurations": 0,
+          "exception_valid_absent": 0,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 20,
+          "non_exception_configurations": 40,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 40,
+          "valid_absent": 0,
+          "valid_exists": 40,
+          "violations": 0
+        },
+        "k": 1,
+        "k_sets": 5,
+        "lemma_1": {
+          "at_least_two_element_families": 4,
+          "family_instances": 5,
+          "gale_comparisons": 10,
+          "three_element_families": 1,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 0,
+          "family_instances": 5,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 0,
+          "distinct_hook_families_converse_checked": 0,
+          "family_instances": 5,
+          "hook_parameter_cases_converse_checked": 0,
+          "violations": 0
+        },
+        "n": 5,
+        "runtime_seconds": 0.000218,
+        "shifted_families": 5
+      },
+      {
+        "biconditional": {
+          "configurations": 560,
+          "exception_configurations": 4,
+          "exception_valid_absent": 4,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 220,
+          "non_exception_configurations": 556,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 556,
+          "valid_absent": 4,
+          "valid_exists": 556,
+          "violations": 0
+        },
+        "k": 2,
+        "k_sets": 10,
+        "lemma_1": {
+          "at_least_two_element_families": 14,
+          "family_instances": 15,
+          "gale_comparisons": 65,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 2,
+          "family_instances": 15,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 2,
+          "distinct_hook_families_converse_checked": 2,
+          "family_instances": 15,
+          "hook_parameter_cases_converse_checked": 2,
+          "violations": 0
+        },
+        "n": 5,
+        "runtime_seconds": 0.002647,
+        "shifted_families": 15
+      },
+      {
+        "biconditional": {
+          "configurations": 560,
+          "exception_configurations": 4,
+          "exception_valid_absent": 4,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 220,
+          "non_exception_configurations": 556,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 556,
+          "valid_absent": 4,
+          "valid_exists": 556,
+          "violations": 0
+        },
+        "k": 3,
+        "k_sets": 10,
+        "lemma_1": {
+          "at_least_two_element_families": 14,
+          "family_instances": 15,
+          "gale_comparisons": 65,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 2,
+          "family_instances": 15,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 2,
+          "distinct_hook_families_converse_checked": 2,
+          "family_instances": 15,
+          "hook_parameter_cases_converse_checked": 2,
+          "violations": 0
+        },
+        "n": 5,
+        "runtime_seconds": 0.002854,
+        "shifted_families": 15
+      },
+      {
+        "biconditional": {
+          "configurations": 40,
+          "exception_configurations": 0,
+          "exception_valid_absent": 0,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 20,
+          "non_exception_configurations": 40,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 40,
+          "valid_absent": 0,
+          "valid_exists": 40,
+          "violations": 0
+        },
+        "k": 4,
+        "k_sets": 5,
+        "lemma_1": {
+          "at_least_two_element_families": 4,
+          "family_instances": 5,
+          "gale_comparisons": 10,
+          "three_element_families": 1,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 0,
+          "family_instances": 5,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 0,
+          "distinct_hook_families_converse_checked": 0,
+          "family_instances": 5,
+          "hook_parameter_cases_converse_checked": 0,
+          "violations": 0
+        },
+        "n": 5,
+        "runtime_seconds": 0.000245,
+        "shifted_families": 5
+      },
+      {
+        "biconditional": {
+          "configurations": 70,
+          "exception_configurations": 0,
+          "exception_valid_absent": 0,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 35,
+          "non_exception_configurations": 70,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 70,
+          "valid_absent": 0,
+          "valid_exists": 70,
+          "violations": 0
+        },
+        "k": 1,
+        "k_sets": 6,
+        "lemma_1": {
+          "at_least_two_element_families": 5,
+          "family_instances": 6,
+          "gale_comparisons": 15,
+          "three_element_families": 1,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 0,
+          "family_instances": 6,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 0,
+          "distinct_hook_families_converse_checked": 0,
+          "family_instances": 6,
+          "hook_parameter_cases_converse_checked": 0,
+          "violations": 0
+        },
+        "n": 6,
+        "runtime_seconds": 0.00033,
+        "shifted_families": 6
+      },
+      {
+        "biconditional": {
+          "configurations": 2720,
+          "exception_configurations": 6,
+          "exception_valid_absent": 6,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 1000,
+          "non_exception_configurations": 2714,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 2714,
+          "valid_absent": 6,
+          "valid_exists": 2714,
+          "violations": 0
+        },
+        "k": 2,
+        "k_sets": 15,
+        "lemma_1": {
+          "at_least_two_element_families": 30,
+          "family_instances": 31,
+          "gale_comparisons": 209,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 3,
+          "family_instances": 31,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 3,
+          "distinct_hook_families_converse_checked": 3,
+          "family_instances": 31,
+          "hook_parameter_cases_converse_checked": 3,
+          "violations": 0
+        },
+        "n": 6,
+        "runtime_seconds": 0.012517,
+        "shifted_families": 31
+      },
+      {
+        "biconditional": {
+          "configurations": 10774,
+          "exception_configurations": 8,
+          "exception_valid_absent": 8,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 3630,
+          "non_exception_configurations": 10766,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 10766,
+          "valid_absent": 8,
+          "valid_exists": 10766,
+          "violations": 0
+        },
+        "k": 3,
+        "k_sets": 20,
+        "lemma_1": {
+          "at_least_two_element_families": 64,
+          "family_instances": 65,
+          "gale_comparisons": 595,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 4,
+          "family_instances": 65,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 4,
+          "distinct_hook_families_converse_checked": 4,
+          "family_instances": 65,
+          "hook_parameter_cases_converse_checked": 4,
+          "violations": 0
+        },
+        "n": 6,
+        "runtime_seconds": 0.051414,
+        "shifted_families": 65
+      },
+      {
+        "biconditional": {
+          "configurations": 2720,
+          "exception_configurations": 6,
+          "exception_valid_absent": 6,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 1000,
+          "non_exception_configurations": 2714,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 2714,
+          "valid_absent": 6,
+          "valid_exists": 2714,
+          "violations": 0
+        },
+        "k": 4,
+        "k_sets": 15,
+        "lemma_1": {
+          "at_least_two_element_families": 30,
+          "family_instances": 31,
+          "gale_comparisons": 209,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 3,
+          "family_instances": 31,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 3,
+          "distinct_hook_families_converse_checked": 3,
+          "family_instances": 31,
+          "hook_parameter_cases_converse_checked": 3,
+          "violations": 0
+        },
+        "n": 6,
+        "runtime_seconds": 0.012496,
+        "shifted_families": 31
+      },
+      {
+        "biconditional": {
+          "configurations": 70,
+          "exception_configurations": 0,
+          "exception_valid_absent": 0,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 35,
+          "non_exception_configurations": 70,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 70,
+          "valid_absent": 0,
+          "valid_exists": 70,
+          "violations": 0
+        },
+        "k": 5,
+        "k_sets": 6,
+        "lemma_1": {
+          "at_least_two_element_families": 5,
+          "family_instances": 6,
+          "gale_comparisons": 15,
+          "three_element_families": 1,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 0,
+          "family_instances": 6,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 0,
+          "distinct_hook_families_converse_checked": 0,
+          "family_instances": 6,
+          "hook_parameter_cases_converse_checked": 0,
+          "violations": 0
+        },
+        "n": 6,
+        "runtime_seconds": 0.000418,
+        "shifted_families": 6
+      },
+      {
+        "biconditional": {
+          "configurations": 112,
+          "exception_configurations": 0,
+          "exception_valid_absent": 0,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 56,
+          "non_exception_configurations": 112,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 112,
+          "valid_absent": 0,
+          "valid_exists": 112,
+          "violations": 0
+        },
+        "k": 1,
+        "k_sets": 7,
+        "lemma_1": {
+          "at_least_two_element_families": 6,
+          "family_instances": 7,
+          "gale_comparisons": 21,
+          "three_element_families": 1,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 0,
+          "family_instances": 7,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 0,
+          "distinct_hook_families_converse_checked": 0,
+          "family_instances": 7,
+          "hook_parameter_cases_converse_checked": 0,
+          "violations": 0
+        },
+        "n": 7,
+        "runtime_seconds": 0.000528,
+        "shifted_families": 7
+      },
+      {
+        "biconditional": {
+          "configurations": 11200,
+          "exception_configurations": 8,
+          "exception_valid_absent": 8,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 3920,
+          "non_exception_configurations": 11192,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 11192,
+          "valid_absent": 8,
+          "valid_exists": 11192,
+          "violations": 0
+        },
+        "k": 2,
+        "k_sets": 21,
+        "lemma_1": {
+          "at_least_two_element_families": 62,
+          "family_instances": 63,
+          "gale_comparisons": 609,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 4,
+          "family_instances": 63,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 4,
+          "distinct_hook_families_converse_checked": 4,
+          "family_instances": 63,
+          "hook_parameter_cases_converse_checked": 4,
+          "violations": 0
+        },
+        "n": 7,
+        "runtime_seconds": 0.054056,
+        "shifted_families": 63
+      },
+      {
+        "biconditional": {
+          "configurations": 193416,
+          "exception_configurations": 12,
+          "exception_valid_absent": 12,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 58520,
+          "non_exception_configurations": 193404,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 193404,
+          "valid_absent": 12,
+          "valid_exists": 193404,
+          "violations": 0
+        },
+        "k": 3,
+        "k_sets": 35,
+        "lemma_1": {
+          "at_least_two_element_families": 350,
+          "family_instances": 351,
+          "gale_comparisons": 5809,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 6,
+          "family_instances": 351,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 6,
+          "distinct_hook_families_converse_checked": 6,
+          "family_instances": 351,
+          "hook_parameter_cases_converse_checked": 6,
+          "violations": 0
+        },
+        "n": 7,
+        "runtime_seconds": 1.108053,
+        "shifted_families": 351
+      },
+      {
+        "biconditional": {
+          "configurations": 193416,
+          "exception_configurations": 12,
+          "exception_valid_absent": 12,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 58520,
+          "non_exception_configurations": 193404,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 193404,
+          "valid_absent": 12,
+          "valid_exists": 193404,
+          "violations": 0
+        },
+        "k": 4,
+        "k_sets": 35,
+        "lemma_1": {
+          "at_least_two_element_families": 350,
+          "family_instances": 351,
+          "gale_comparisons": 5809,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 6,
+          "family_instances": 351,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 6,
+          "distinct_hook_families_converse_checked": 6,
+          "family_instances": 351,
+          "hook_parameter_cases_converse_checked": 6,
+          "violations": 0
+        },
+        "n": 7,
+        "runtime_seconds": 1.141614,
+        "shifted_families": 351
+      },
+      {
+        "biconditional": {
+          "configurations": 11200,
+          "exception_configurations": 8,
+          "exception_valid_absent": 8,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 3920,
+          "non_exception_configurations": 11192,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 11192,
+          "valid_absent": 8,
+          "valid_exists": 11192,
+          "violations": 0
+        },
+        "k": 5,
+        "k_sets": 21,
+        "lemma_1": {
+          "at_least_two_element_families": 62,
+          "family_instances": 63,
+          "gale_comparisons": 609,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 4,
+          "family_instances": 63,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 4,
+          "distinct_hook_families_converse_checked": 4,
+          "family_instances": 63,
+          "hook_parameter_cases_converse_checked": 4,
+          "violations": 0
+        },
+        "n": 7,
+        "runtime_seconds": 0.057893,
+        "shifted_families": 63
+      },
+      {
+        "biconditional": {
+          "configurations": 112,
+          "exception_configurations": 0,
+          "exception_valid_absent": 0,
+          "exception_valid_exists": 0,
+          "family_pair_instances": 56,
+          "non_exception_configurations": 112,
+          "non_exception_valid_absent": 0,
+          "non_exception_valid_exists": 112,
+          "valid_absent": 0,
+          "valid_exists": 112,
+          "violations": 0
+        },
+        "k": 6,
+        "k_sets": 7,
+        "lemma_1": {
+          "at_least_two_element_families": 6,
+          "family_instances": 7,
+          "gale_comparisons": 21,
+          "three_element_families": 1,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 0,
+          "family_instances": 7,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 0,
+          "distinct_hook_families_converse_checked": 0,
+          "family_instances": 7,
+          "hook_parameter_cases_converse_checked": 0,
+          "violations": 0
+        },
+        "n": 7,
+        "runtime_seconds": 0.000561,
+        "shifted_families": 7
+      },
+      {
+        "biconditional": null,
+        "k": 1,
+        "k_sets": 8,
+        "lemma_1": {
+          "at_least_two_element_families": 7,
+          "family_instances": 8,
+          "gale_comparisons": 28,
+          "three_element_families": 1,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 0,
+          "family_instances": 8,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 0,
+          "distinct_hook_families_converse_checked": 0,
+          "family_instances": 8,
+          "hook_parameter_cases_converse_checked": 0,
+          "violations": 0
+        },
+        "n": 8,
+        "runtime_seconds": 0.000141,
+        "shifted_families": 8
+      },
+      {
+        "biconditional": null,
+        "k": 2,
+        "k_sets": 28,
+        "lemma_1": {
+          "at_least_two_element_families": 126,
+          "family_instances": 127,
+          "gale_comparisons": 1665,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 5,
+          "family_instances": 127,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 5,
+          "distinct_hook_families_converse_checked": 5,
+          "family_instances": 127,
+          "hook_parameter_cases_converse_checked": 5,
+          "violations": 0
+        },
+        "n": 8,
+        "runtime_seconds": 0.007146,
+        "shifted_families": 127
+      },
+      {
+        "biconditional": null,
+        "k": 3,
+        "k_sets": 56,
+        "lemma_1": {
+          "at_least_two_element_families": 2429,
+          "family_instances": 2430,
+          "gale_comparisons": 65638,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 8,
+          "family_instances": 2430,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 8,
+          "distinct_hook_families_converse_checked": 8,
+          "family_instances": 2430,
+          "hook_parameter_cases_converse_checked": 8,
+          "violations": 0
+        },
+        "n": 8,
+        "runtime_seconds": 0.403957,
+        "shifted_families": 2430
+      },
+      {
+        "biconditional": null,
+        "k": 4,
+        "k_sets": 70,
+        "lemma_1": {
+          "at_least_two_element_families": 9302,
+          "family_instances": 9303,
+          "gale_comparisons": 316337,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 9,
+          "family_instances": 9303,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 9,
+          "distinct_hook_families_converse_checked": 9,
+          "family_instances": 9303,
+          "hook_parameter_cases_converse_checked": 9,
+          "violations": 0
+        },
+        "n": 8,
+        "runtime_seconds": 2.288115,
+        "shifted_families": 9303
+      },
+      {
+        "biconditional": null,
+        "k": 5,
+        "k_sets": 56,
+        "lemma_1": {
+          "at_least_two_element_families": 2429,
+          "family_instances": 2430,
+          "gale_comparisons": 65638,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 8,
+          "family_instances": 2430,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 8,
+          "distinct_hook_families_converse_checked": 8,
+          "family_instances": 2430,
+          "hook_parameter_cases_converse_checked": 8,
+          "violations": 0
+        },
+        "n": 8,
+        "runtime_seconds": 0.464357,
+        "shifted_families": 2430
+      },
+      {
+        "biconditional": null,
+        "k": 6,
+        "k_sets": 28,
+        "lemma_1": {
+          "at_least_two_element_families": 126,
+          "family_instances": 127,
+          "gale_comparisons": 1665,
+          "three_element_families": 2,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 5,
+          "family_instances": 127,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 5,
+          "distinct_hook_families_converse_checked": 5,
+          "family_instances": 127,
+          "hook_parameter_cases_converse_checked": 5,
+          "violations": 0
+        },
+        "n": 8,
+        "runtime_seconds": 0.011104,
+        "shifted_families": 127
+      },
+      {
+        "biconditional": null,
+        "k": 7,
+        "k_sets": 8,
+        "lemma_1": {
+          "at_least_two_element_families": 7,
+          "family_instances": 8,
+          "gale_comparisons": 28,
+          "three_element_families": 1,
+          "two_element_families": 1,
+          "violations": 0
+        },
+        "lemma_2": {
+          "bad_templates": 0,
+          "family_instances": 8,
+          "violations": 0
+        },
+        "lemma_3": {
+          "bad_templates_forward_checked": 0,
+          "distinct_hook_families_converse_checked": 0,
+          "family_instances": 8,
+          "hook_parameter_cases_converse_checked": 0,
+          "violations": 0
+        },
+        "n": 8,
+        "runtime_seconds": 0.000357,
+        "shifted_families": 8
+      }
+    ],
+    "totals": {
+      "biconditional": {
+        "configurations": 427156,
+        "exception_configurations": 70,
+        "exception_valid_absent": 70,
+        "exception_valid_exists": 0,
+        "family_pair_instances": 131239,
+        "non_exception_configurations": 427086,
+        "non_exception_valid_absent": 0,
+        "non_exception_valid_exists": 427086,
+        "valid_absent": 70,
+        "valid_exists": 427086,
+        "violations": 0
+      },
+      "lemma_1": {
+        "at_least_two_element_families": 15449,
+        "family_instances": 15477,
+        "gale_comparisons": 465106,
+        "three_element_families": 42,
+        "two_element_families": 28,
+        "violations": 0
+      },
+      "lemma_2": {
+        "bad_templates": 70,
+        "family_instances": 15477,
+        "violations": 0
+      },
+      "lemma_3": {
+        "bad_templates_forward_checked": 70,
+        "distinct_hook_families_converse_checked": 70,
+        "family_instances": 15477,
+        "hook_parameter_cases_converse_checked": 70,
+        "violations": 0
+      }
+    }
+  },
+  "coverage": {
+    "biconditional": [
+      {
+        "k": 1,
+        "n": 2,
+        "shifted_families": 2
+      },
+      {
+        "k": 1,
+        "n": 3,
+        "shifted_families": 3
+      },
+      {
+        "k": 2,
+        "n": 3,
+        "shifted_families": 3
+      },
+      {
+        "k": 1,
+        "n": 4,
+        "shifted_families": 4
+      },
+      {
+        "k": 2,
+        "n": 4,
+        "shifted_families": 7
+      },
+      {
+        "k": 3,
+        "n": 4,
+        "shifted_families": 4
+      },
+      {
+        "k": 1,
+        "n": 5,
+        "shifted_families": 5
+      },
+      {
+        "k": 2,
+        "n": 5,
+        "shifted_families": 15
+      },
+      {
+        "k": 3,
+        "n": 5,
+        "shifted_families": 15
+      },
+      {
+        "k": 4,
+        "n": 5,
+        "shifted_families": 5
+      },
+      {
+        "k": 1,
+        "n": 6,
+        "shifted_families": 6
+      },
+      {
+        "k": 2,
+        "n": 6,
+        "shifted_families": 31
+      },
+      {
+        "k": 3,
+        "n": 6,
+        "shifted_families": 65
+      },
+      {
+        "k": 4,
+        "n": 6,
+        "shifted_families": 31
+      },
+      {
+        "k": 5,
+        "n": 6,
+        "shifted_families": 6
+      },
+      {
+        "k": 1,
+        "n": 7,
+        "shifted_families": 7
+      },
+      {
+        "k": 2,
+        "n": 7,
+        "shifted_families": 63
+      },
+      {
+        "k": 3,
+        "n": 7,
+        "shifted_families": 351
+      },
+      {
+        "k": 4,
+        "n": 7,
+        "shifted_families": 351
+      },
+      {
+        "k": 5,
+        "n": 7,
+        "shifted_families": 63
+      },
+      {
+        "k": 6,
+        "n": 7,
+        "shifted_families": 7
+      }
+    ],
+    "biconditional_max_n": 7,
+    "enumeration_policy": "Every labeled shifted family is enumerated separately for every (n,k); families not using n are therefore intentionally repeated on larger grounds.",
+    "lemma_1": [
+      {
+        "k": 1,
+        "n": 2,
+        "shifted_families": 2
+      },
+      {
+        "k": 1,
+        "n": 3,
+        "shifted_families": 3
+      },
+      {
+        "k": 2,
+        "n": 3,
+        "shifted_families": 3
+      },
+      {
+        "k": 1,
+        "n": 4,
+        "shifted_families": 4
+      },
+      {
+        "k": 2,
+        "n": 4,
+        "shifted_families": 7
+      },
+      {
+        "k": 3,
+        "n": 4,
+        "shifted_families": 4
+      },
+      {
+        "k": 1,
+        "n": 5,
+        "shifted_families": 5
+      },
+      {
+        "k": 2,
+        "n": 5,
+        "shifted_families": 15
+      },
+      {
+        "k": 3,
+        "n": 5,
+        "shifted_families": 15
+      },
+      {
+        "k": 4,
+        "n": 5,
+        "shifted_families": 5
+      },
+      {
+        "k": 1,
+        "n": 6,
+        "shifted_families": 6
+      },
+      {
+        "k": 2,
+        "n": 6,
+        "shifted_families": 31
+      },
+      {
+        "k": 3,
+        "n": 6,
+        "shifted_families": 65
+      },
+      {
+        "k": 4,
+        "n": 6,
+        "shifted_families": 31
+      },
+      {
+        "k": 5,
+        "n": 6,
+        "shifted_families": 6
+      },
+      {
+        "k": 1,
+        "n": 7,
+        "shifted_families": 7
+      },
+      {
+        "k": 2,
+        "n": 7,
+        "shifted_families": 63
+      },
+      {
+        "k": 3,
+        "n": 7,
+        "shifted_families": 351
+      },
+      {
+        "k": 4,
+        "n": 7,
+        "shifted_families": 351
+      },
+      {
+        "k": 5,
+        "n": 7,
+        "shifted_families": 63
+      },
+      {
+        "k": 6,
+        "n": 7,
+        "shifted_families": 7
+      },
+      {
+        "k": 1,
+        "n": 8,
+        "shifted_families": 8
+      },
+      {
+        "k": 2,
+        "n": 8,
+        "shifted_families": 127
+      },
+      {
+        "k": 3,
+        "n": 8,
+        "shifted_families": 2430
+      },
+      {
+        "k": 4,
+        "n": 8,
+        "shifted_families": 9303
+      },
+      {
+        "k": 5,
+        "n": 8,
+        "shifted_families": 2430
+      },
+      {
+        "k": 6,
+        "n": 8,
+        "shifted_families": 127
+      },
+      {
+        "k": 7,
+        "n": 8,
+        "shifted_families": 8
+      }
+    ],
+    "lemma_2": [
+      {
+        "k": 1,
+        "n": 2,
+        "shifted_families": 2
+      },
+      {
+        "k": 1,
+        "n": 3,
+        "shifted_families": 3
+      },
+      {
+        "k": 2,
+        "n": 3,
+        "shifted_families": 3
+      },
+      {
+        "k": 1,
+        "n": 4,
+        "shifted_families": 4
+      },
+      {
+        "k": 2,
+        "n": 4,
+        "shifted_families": 7
+      },
+      {
+        "k": 3,
+        "n": 4,
+        "shifted_families": 4
+      },
+      {
+        "k": 1,
+        "n": 5,
+        "shifted_families": 5
+      },
+      {
+        "k": 2,
+        "n": 5,
+        "shifted_families": 15
+      },
+      {
+        "k": 3,
+        "n": 5,
+        "shifted_families": 15
+      },
+      {
+        "k": 4,
+        "n": 5,
+        "shifted_families": 5
+      },
+      {
+        "k": 1,
+        "n": 6,
+        "shifted_families": 6
+      },
+      {
+        "k": 2,
+        "n": 6,
+        "shifted_families": 31
+      },
+      {
+        "k": 3,
+        "n": 6,
+        "shifted_families": 65
+      },
+      {
+        "k": 4,
+        "n": 6,
+        "shifted_families": 31
+      },
+      {
+        "k": 5,
+        "n": 6,
+        "shifted_families": 6
+      },
+      {
+        "k": 1,
+        "n": 7,
+        "shifted_families": 7
+      },
+      {
+        "k": 2,
+        "n": 7,
+        "shifted_families": 63
+      },
+      {
+        "k": 3,
+        "n": 7,
+        "shifted_families": 351
+      },
+      {
+        "k": 4,
+        "n": 7,
+        "shifted_families": 351
+      },
+      {
+        "k": 5,
+        "n": 7,
+        "shifted_families": 63
+      },
+      {
+        "k": 6,
+        "n": 7,
+        "shifted_families": 7
+      },
+      {
+        "k": 1,
+        "n": 8,
+        "shifted_families": 8
+      },
+      {
+        "k": 2,
+        "n": 8,
+        "shifted_families": 127
+      },
+      {
+        "k": 3,
+        "n": 8,
+        "shifted_families": 2430
+      },
+      {
+        "k": 4,
+        "n": 8,
+        "shifted_families": 9303
+      },
+      {
+        "k": 5,
+        "n": 8,
+        "shifted_families": 2430
+      },
+      {
+        "k": 6,
+        "n": 8,
+        "shifted_families": 127
+      },
+      {
+        "k": 7,
+        "n": 8,
+        "shifted_families": 8
+      }
+    ],
+    "lemma_3": [
+      {
+        "k": 1,
+        "n": 2,
+        "shifted_families": 2
+      },
+      {
+        "k": 1,
+        "n": 3,
+        "shifted_families": 3
+      },
+      {
+        "k": 2,
+        "n": 3,
+        "shifted_families": 3
+      },
+      {
+        "k": 1,
+        "n": 4,
+        "shifted_families": 4
+      },
+      {
+        "k": 2,
+        "n": 4,
+        "shifted_families": 7
+      },
+      {
+        "k": 3,
+        "n": 4,
+        "shifted_families": 4
+      },
+      {
+        "k": 1,
+        "n": 5,
+        "shifted_families": 5
+      },
+      {
+        "k": 2,
+        "n": 5,
+        "shifted_families": 15
+      },
+      {
+        "k": 3,
+        "n": 5,
+        "shifted_families": 15
+      },
+      {
+        "k": 4,
+        "n": 5,
+        "shifted_families": 5
+      },
+      {
+        "k": 1,
+        "n": 6,
+        "shifted_families": 6
+      },
+      {
+        "k": 2,
+        "n": 6,
+        "shifted_families": 31
+      },
+      {
+        "k": 3,
+        "n": 6,
+        "shifted_families": 65
+      },
+      {
+        "k": 4,
+        "n": 6,
+        "shifted_families": 31
+      },
+      {
+        "k": 5,
+        "n": 6,
+        "shifted_families": 6
+      },
+      {
+        "k": 1,
+        "n": 7,
+        "shifted_families": 7
+      },
+      {
+        "k": 2,
+        "n": 7,
+        "shifted_families": 63
+      },
+      {
+        "k": 3,
+        "n": 7,
+        "shifted_families": 351
+      },
+      {
+        "k": 4,
+        "n": 7,
+        "shifted_families": 351
+      },
+      {
+        "k": 5,
+        "n": 7,
+        "shifted_families": 63
+      },
+      {
+        "k": 6,
+        "n": 7,
+        "shifted_families": 7
+      },
+      {
+        "k": 1,
+        "n": 8,
+        "shifted_families": 8
+      },
+      {
+        "k": 2,
+        "n": 8,
+        "shifted_families": 127
+      },
+      {
+        "k": 3,
+        "n": 8,
+        "shifted_families": 2430
+      },
+      {
+        "k": 4,
+        "n": 8,
+        "shifted_families": 9303
+      },
+      {
+        "k": 5,
+        "n": 8,
+        "shifted_families": 2430
+      },
+      {
+        "k": 6,
+        "n": 8,
+        "shifted_families": 127
+      },
+      {
+        "k": 7,
+        "n": 8,
+        "shifted_families": 8
+      }
+    ],
+    "lemma_max_n": 8,
+    "n_1": "No k satisfies 1 <= k <= n-1.",
+    "sampling_or_caps": "none"
+  },
+  "date": "2026-08-15",
+  "definitions_used": {
+    "bad_template": "At least four vertices, exactly two universal vertices, and the remaining induced graph has exactly two nonempty connected components, each a clique.",
+    "gale_order": "Increasing listings compared componentwise.",
+    "hook_parameter_ranges": "k+2 <= r <= n and 1 <= s <= k-1.",
+    "johnson_graph": "Vertices are family members; adjacency means symmetric difference 2.",
+    "shifted_family": "A nonempty family of k-sets closed under every single decrement. Enumeration uses the equivalent nonempty order ideals of the Gale poset.",
+    "step_validity": "The F1/F0 split, link and forbidden partners are computed exactly as in the brief; candidates exchange e for one xi not in Y and obey both endpoint rules."
+  },
+  "enumerator_self_check": {
+    "covered": [
+      {
+        "k": 1,
+        "n": 2,
+        "shifted_families": 2
+      },
+      {
+        "k": 1,
+        "n": 3,
+        "shifted_families": 3
+      },
+      {
+        "k": 2,
+        "n": 3,
+        "shifted_families": 3
+      },
+      {
+        "k": 1,
+        "n": 4,
+        "shifted_families": 4
+      },
+      {
+        "k": 2,
+        "n": 4,
+        "shifted_families": 7
+      },
+      {
+        "k": 3,
+        "n": 4,
+        "shifted_families": 4
+      },
+      {
+        "k": 1,
+        "n": 5,
+        "shifted_families": 5
+      },
+      {
+        "k": 2,
+        "n": 5,
+        "shifted_families": 15
+      },
+      {
+        "k": 3,
+        "n": 5,
+        "shifted_families": 15
+      },
+      {
+        "k": 4,
+        "n": 5,
+        "shifted_families": 5
+      }
+    ],
+    "method": "Compared the order-ideal generator with all subsets of the k-sets, filtered by the literal single-decrement definition.",
+    "passed": true
+  },
+  "implementation": {
+    "command": "seal_step_lemma_inputs.py",
+    "independence": "Self-contained implementation from the definitions in the seal brief.",
+    "platform": "Linux-6.6.114.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "python": "3.10.18 (main, Jun  5 2025, 13:14:17) [GCC 11.2.0]",
+    "script": "/home/jbaggett/combinatorics/topics/flipgraphs/realization/compute/seal_step_lemma_inputs.py",
+    "script_sha256": "9f7936e7067802cbe2b2240d654e913045c00b734f87e233a1807573b103fa05"
+  },
+  "memory_limit": {
+    "applied_hard_bytes": 12288000000,
+    "applied_soft_bytes": 8589934592,
+    "exact_requested_limit_applied": true,
+    "old_hard_bytes": 12288000000,
+    "old_soft_bytes": 12288000000,
+    "requested_bytes": 8589934592,
+    "requested_gib": 8,
+    "resource": "RLIMIT_AS"
+  },
+  "runtime": {
+    "max_rss_kib_linux": 31104,
+    "system_cpu_seconds": 0.016098,
+    "user_cpu_seconds": 5.68271,
+    "wall_seconds": 5.62809
+  },
+  "seal": "Step Lemma inputs computational seal",
+  "status": "PASS",
+  "violations": {
+    "by_check": {
+      "biconditional": [],
+      "lemma_1": [],
+      "lemma_2": [],
+      "lemma_3": []
+    },
+    "total": 0
+  }
+}

@@ -1,0 +1,8 @@
+# pinned output of compute/qstar_ord_steps.py, run 2026-09-07
+
+  ...n=4 {'hops': 56, 'step5-ok': 56, 'step3-ok': 56}
+  ...n=5 {'hops': 674, 'step5-ok': 440, 'step3-ok': 590, 'step4-ok': 84, 'step2-ok': 180}
+  ...n=6 {'hops': 8506, 'step5-ok': 3318, 'step3-ok': 6768, 'step4-ok': 1738, 'step2-ok': 1582, 'delta-negative': 416}
+  ...n=7 {'hops': 88518, 'step5-ok': 19386, 'step3-ok': 64630, 'step4-ok': 23888, 'step2-ok': 10660, 'delta-negative': 8876}
+
+STEP FAILURES: NONE

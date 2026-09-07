@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jeffrey S. Baggett
 -/
 
-import BrualdiLean.RealizationGraph.PathWalks
+import Realization.PathWalks
 import Mathlib.Data.List.ChainOfFn
 
 /-!

@@ -64,16 +64,16 @@ Part B, and one that never printed it was never open.  Note the converse trap re
 as *"does not depend on any axioms"*, cleaner than a real theorem.  There are none in this tree; if
 one is ever reintroduced, this file will report it as PROVED and be wrong.
 -/
-import BrualdiLean.RealizationGraph.TheoremOne
-import BrualdiLean.RealizationGraph.SequelWave1
-import BrualdiLean.RealizationGraph.SeparatorTheorem
-import BrualdiLean.RealizationGraph.LayeredBase
-import BrualdiLean.RealizationGraph.InterfaceSaturation
-import BrualdiLean.RealizationGraph.TriangleProjection
-import BrualdiLean.RealizationGraph.LayerCapacity
-import BrualdiLean.RealizationGraph.PathWalks3
-import BrualdiLean.RealizationGraph.QStar
-import BrualdiLean.RealizationGraph.SBPlusOrd
+import Realization.TheoremOne
+import Realization.SequelWave1
+import Realization.SeparatorTheorem
+import Realization.LayeredBase
+import Realization.InterfaceSaturation
+import Realization.TriangleProjection
+import Realization.LayerCapacity
+import Realization.PathWalks3
+import Realization.QStar
+import Realization.SBPlusOrd
 
 -- Theorem 1.1 / 3.1, the bipartite case, and its product inputs
 #print axioms Brualdi.RealizationGraph.theorem_one

@@ -3,8 +3,8 @@ Copyright (c) 2026 Jeffrey S. Baggett. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jeffrey S. Baggett
 -/
-import BrualdiLean.RealizationGraph.Transfer
-import BrualdiLean.RealizationGraph.LemmaRCore
+import Realization.Transfer
+import Realization.LemmaRCore
 import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Finset.Card

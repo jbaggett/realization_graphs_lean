@@ -79,17 +79,19 @@ This module previously exposed unfinished proofs as `sorry`s, so that every open
 ones.  `compute/check_axiom_baseline.py`, updated in the same edit, remains the source of truth rather
 than repeating a numeric count here.
 -/
-import BrualdiLean.RealizationGraph.QStar
-import BrualdiLean.RealizationGraph.Observation0
-import BrualdiLean.RealizationGraph.TheoremOne
-import BrualdiLean.RealizationGraph.LemmaRCore
-import BrualdiLean.RealizationGraph.QuotientAdjacency
-import BrualdiLean.RealizationGraph.TriangleProjection
-import BrualdiLean.RealizationGraph.InterfaceSaturation
+import Realization.QStar
+import Realization.TightUnion
+import Realization.Observation0
+import Realization.TheoremOne
+import Realization.LemmaRCore
+import Realization.QuotientAdjacency
+import Realization.TriangleProjection
+import Realization.InterfaceSaturation
 
 namespace Brualdi.RealizationGraph.SBPlusOrd
 
 open Brualdi.Ledger
+open Brualdi.RealizationGraph
 open Brualdi.RealizationGraph
 open scoped symmDiff
 
@@ -1209,7 +1211,6 @@ admits grew by 26 of 161 sequences through ground order 7 — and it makes every
 the theorem the manuscript states rather than a special case. The change was made while all four
 consumers still carried `sorry`, which is the only time it is free. -/
 structure MainLine (d : V → ℕ) : Prop where
-  active : Active d
   indecomposable : ¬ TyshkevichDecomposable d
   nonbipartite : ¬ (RealizationGraph d).Colorable 2
   notK3 : NotK3Base d
@@ -2441,128 +2442,8 @@ theorem sum_degree_le_of_finset {W : Type*} [Fintype W] [DecidableEq W]
   · simpa using Finset.sum_le_sum hinternal
   · exact Finset.sum_le_sum hexternal
 
-/-- **(EG-set), the equality case.** Equality forces both termwise bounds to be tight: `T` is a
-clique, and every vertex outside `T` sends `min(deg, |T|)` edges into it — so in particular every
-outside vertex of degree at least `|T|` is adjacent to ALL of `T`. This is the manuscript's Step 3
-input with the order removed.
-
-Only the forward direction is stated, because only it is consumed. The converse also holds and the
-numeric check confirms it (`slack = 0 ↔ clique ∧ saturated`, 0 discrepancies over every graph on at
-most 6 vertices); it is left unstated rather than unproved. -/
-theorem isClique_of_sum_degree_eq {W : Type*} [Fintype W] [DecidableEq W]
-    (G : SimpleGraph W) [DecidableRel G.Adj] {T : Finset W}
-    (heq : ∑ u ∈ T, G.degree u = T.card * (T.card - 1) + ∑ u ∈ Tᶜ, min (G.degree u) T.card) :
-    G.IsClique (T : Set W) ∧
-      ∀ u ∈ Tᶜ, (G.neighborFinset u ∩ T).card = min (G.degree u) T.card := by
-  have hsplit (u : W) :
-      G.degree u = (G.neighborFinset u ∩ T).card +
-        (G.neighborFinset u ∩ Tᶜ).card := by
-    rw [← G.card_neighborFinset_eq_degree]
-    have hT : (G.neighborFinset u).filter (fun z => z ∈ T) =
-        G.neighborFinset u ∩ T := Finset.filter_mem_eq_inter
-    have hTc : (G.neighborFinset u).filter (fun z => z ∉ T) =
-        G.neighborFinset u ∩ Tᶜ := by
-      ext z
-      simp
-    rw [← hT, ← hTc]
-    exact (Finset.card_filter_add_card_filter_not (s := G.neighborFinset u)
-      (fun z => z ∈ T)).symm
-  have hinter (u : W) (S : Finset W) :
-      (G.neighborFinset u ∩ S).card =
-        ∑ y ∈ S, if G.Adj u y then 1 else 0 := by
-    rw [Finset.card_eq_sum_ones, ← Finset.sum_filter]
-    congr 1
-    ext y
-    simp [SimpleGraph.mem_neighborFinset, and_comm]
-  have hcross : (∑ u ∈ T, (G.neighborFinset u ∩ Tᶜ).card) =
-      ∑ u ∈ Tᶜ, (G.neighborFinset u ∩ T).card := by
-    calc
-      (∑ u ∈ T, (G.neighborFinset u ∩ Tᶜ).card) =
-          ∑ u ∈ T, ∑ y ∈ Tᶜ, if G.Adj u y then 1 else 0 := by
-            apply Finset.sum_congr rfl
-            intro u hu
-            exact hinter u Tᶜ
-      _ = ∑ y ∈ Tᶜ, ∑ u ∈ T, if G.Adj u y then 1 else 0 := Finset.sum_comm
-      _ = ∑ y ∈ Tᶜ, ∑ u ∈ T, if G.Adj y u then 1 else 0 := by
-        apply Finset.sum_congr rfl
-        intro y hy
-        apply Finset.sum_congr rfl
-        intro u hu
-        simp only [G.adj_comm]
-      _ = ∑ y ∈ Tᶜ, (G.neighborFinset y ∩ T).card := by
-        apply Finset.sum_congr rfl
-        intro y hy
-        exact (hinter y T).symm
-  have hdecomp : ∑ u ∈ T, G.degree u =
-      (∑ u ∈ T, (G.neighborFinset u ∩ T).card) +
-        ∑ u ∈ Tᶜ, (G.neighborFinset u ∩ T).card := by
-    calc
-      (∑ u ∈ T, G.degree u) = ∑ u ∈ T,
-          ((G.neighborFinset u ∩ T).card + (G.neighborFinset u ∩ Tᶜ).card) := by
-            apply Finset.sum_congr rfl
-            intro u hu
-            exact hsplit u
-      _ = (∑ u ∈ T, (G.neighborFinset u ∩ T).card) +
-          ∑ u ∈ T, (G.neighborFinset u ∩ Tᶜ).card := by
-            rw [Finset.sum_add_distrib]
-      _ = _ := by rw [hcross]
-  have hinternal (u : W) (hu : u ∈ T) :
-      (G.neighborFinset u ∩ T).card ≤ T.card - 1 := by
-    have hsub : G.neighborFinset u ∩ T ⊆ T.erase u := by
-      intro y hy
-      rw [Finset.mem_erase]
-      refine ⟨?_, (Finset.mem_inter.mp hy).2⟩
-      intro hyu
-      subst y
-      exact G.irrefl (by
-        simpa only [SimpleGraph.mem_neighborFinset] using (Finset.mem_inter.mp hy).1)
-    simpa [Finset.card_erase_of_mem hu] using Finset.card_le_card hsub
-  have hexternal (u : W) (hu : u ∈ Tᶜ) :
-      (G.neighborFinset u ∩ T).card ≤ min (G.degree u) T.card := by
-    apply le_min
-    · rw [← G.card_neighborFinset_eq_degree]
-      exact Finset.card_le_card Finset.inter_subset_left
-    · exact Finset.card_le_card Finset.inter_subset_right
-  have hsum_internal : (∑ u ∈ T, (G.neighborFinset u ∩ T).card) ≤
-      T.card * (T.card - 1) := by simpa using Finset.sum_le_sum hinternal
-  have hsum_external : (∑ u ∈ Tᶜ, (G.neighborFinset u ∩ T).card) ≤
-      ∑ u ∈ Tᶜ, min (G.degree u) T.card := Finset.sum_le_sum hexternal
-  have htotal :
-      (∑ u ∈ T, (G.neighborFinset u ∩ T).card) +
-          ∑ u ∈ Tᶜ, (G.neighborFinset u ∩ T).card =
-        T.card * (T.card - 1) + ∑ u ∈ Tᶜ, min (G.degree u) T.card := by
-    rw [← hdecomp]
-    exact heq
-  have hsum_internal_eq : (∑ u ∈ T, (G.neighborFinset u ∩ T).card) =
-      T.card * (T.card - 1) := by omega
-  have hsum_external_eq : (∑ u ∈ Tᶜ, (G.neighborFinset u ∩ T).card) =
-      ∑ u ∈ Tᶜ, min (G.degree u) T.card := by omega
-  have hinternal_eq : ∀ u ∈ T,
-      (G.neighborFinset u ∩ T).card = T.card - 1 :=
-    (Finset.sum_eq_sum_iff_of_le hinternal).mp (by simpa using hsum_internal_eq)
-  have hexternal_eq : ∀ u ∈ Tᶜ,
-      (G.neighborFinset u ∩ T).card = min (G.degree u) T.card :=
-    (Finset.sum_eq_sum_iff_of_le hexternal).mp hsum_external_eq
-  refine ⟨?_, hexternal_eq⟩
-  rw [G.isClique_iff]
-  intro u hu v hv huv
-  have hsub : G.neighborFinset u ∩ T ⊆ T.erase u := by
-    intro y hy
-    rw [Finset.mem_erase]
-    refine ⟨?_, (Finset.mem_inter.mp hy).2⟩
-    intro hyu
-    subst y
-    exact G.irrefl (by
-      simpa only [SimpleGraph.mem_neighborFinset] using (Finset.mem_inter.mp hy).1)
-  have hcard_erase : (T.erase u).card = T.card - 1 := Finset.card_erase_of_mem hu
-  have hinter_eq : G.neighborFinset u ∩ T = T.erase u := by
-    apply Finset.eq_of_subset_of_card_le hsub
-    rw [hcard_erase, hinternal_eq u hu]
-  have hvN : v ∈ G.neighborFinset u := by
-    have : v ∈ T.erase u := Finset.mem_erase.mpr ⟨huv.symm, hv⟩
-    rw [← hinter_eq] at this
-    exact (Finset.mem_inter.mp this).1
-  simpa only [SimpleGraph.mem_neighborFinset] using hvN
+/- The equality case used below is declared in `EqualityCase.lean`, a prerequisite of
+`TightUnion.lean`; keeping its namespace unchanged avoids duplicating this proof. -/
 
 /-- **The degree bound Step 3 actually consumes.** At equality, a vertex `u` of `T` is adjacent to
 all of `T ∖ {u}` and to every outside vertex of degree at least `|T|`; if every vertex of `T` has
@@ -2740,6 +2621,69 @@ theorem erdosGallaiSlack_eq_of_topBlock {W : Type*} [Fintype W] [DecidableEq W] 
     rw [← Multiset.sum_coe, ← hT]
   unfold erdosGallaiSlack
   rw [htail, htop]
+
+/-- The sorted/set slack identity for any chosen top `t`-set. This packages the multiset sorting
+bookkeeping in `erdosGallaiSlack_eq_of_topBlock`, so tied top blocks can be used by label. -/
+theorem erdosGallaiSlack_eq_of_topFinset {W : Type*} [Fintype W] [DecidableEq W]
+    (w : W → ℕ) {t : ℕ} {T : Finset W} (hcard : T.card = t)
+    (htop : ∀ z ∈ T, ∀ y ∈ Tᶜ, w z ≥ w y) :
+    erdosGallaiSlack w t =
+      ((t : ℤ) * ((t : ℤ) - 1)) + (∑ z ∈ Tᶜ, (min (w z) t : ℤ))
+        - (∑ z ∈ T, (w z : ℤ)) := by
+  let A : Multiset ℕ := T.val.map w
+  let B : Multiset ℕ := Tᶜ.val.map w
+  have hpartition : T.val + Tᶜ.val = (Finset.univ : Finset W).val := by
+    ext x
+    rw [Multiset.count_add]
+    by_cases hx : x ∈ T
+    · rw [Multiset.count_eq_one_of_mem T.nodup hx,
+        Multiset.count_eq_zero_of_notMem (by simpa using hx),
+        Multiset.count_eq_one_of_mem Finset.univ.nodup (Finset.mem_univ x)]
+    · rw [Multiset.count_eq_zero_of_notMem hx,
+        Multiset.count_eq_one_of_mem Tᶜ.nodup (by simpa using hx),
+        Multiset.count_eq_one_of_mem Finset.univ.nodup (Finset.mem_univ x)]
+  have hsort : ((Finset.univ.val.map w).sort (· ≥ ·)) =
+      A.sort (· ≥ ·) ++ B.sort (· ≥ ·) := by
+    rw [← hpartition, Multiset.map_add]
+    change ((A + B).sort (· ≥ ·)) = _
+    apply sort_add_of_high A B
+    intro z hz y hy
+    obtain ⟨z', hz', rfl⟩ := Multiset.mem_map.mp hz
+    obtain ⟨y', hy', rfl⟩ := Multiset.mem_map.mp hy
+    exact htop z' (by simpa using hz') y' (by simpa using hy')
+  have hAlength : (A.sort (· ≥ ·)).length = t := by simp [A, hcard]
+  have htake : ((Finset.univ.val.map w).sort (· ≥ ·)).take t = A.sort (· ≥ ·) := by
+    rw [hsort, ← hAlength, List.take_left]
+  have hdrop : ((Finset.univ.val.map w).sort (· ≥ ·)).drop t = B.sort (· ≥ ·) := by
+    rw [hsort, ← hAlength, List.drop_left]
+  apply erdosGallaiSlack_eq_of_topBlock w hcard
+  · rw [htake]
+    exact (Multiset.sort_eq A (· ≥ ·)).symm
+  · rw [hdrop]
+    exact (Multiset.sort_eq B (· ≥ ·)).symm
+
+/-- **The graph/sequence tightness bridge.** For a realization graph and any chosen top `t`-set,
+set-form Erdős–Gallai tightness is equivalent to zero sorted slack. -/
+theorem egTight_iff_erdosGallaiSlack_eq_zero_of_topFinset
+    {W : Type*} [Fintype W] [DecidableEq W]
+    (G : SimpleGraph W) [DecidableRel G.Adj] {t : ℕ} {T : Finset W} (htpos : 0 < t)
+    (hcard : T.card = t) (htop : ∀ z ∈ T, ∀ y ∈ Tᶜ, G.degree z ≥ G.degree y) :
+    TightUnion.EGTight G T ↔ erdosGallaiSlack (fun z ↦ G.degree z) t = 0 := by
+  rw [erdosGallaiSlack_eq_of_topFinset (fun z ↦ G.degree z) hcard htop]
+  unfold TightUnion.EGTight
+  constructor
+  · intro heq
+    have hcast := congrArg (fun n : ℕ ↦ (n : ℤ)) heq
+    push_cast [Nat.cast_sub (by omega : 1 ≤ T.card)] at hcast
+    rw [hcard] at hcast
+    omega
+  · intro hzero
+    have hcast : ((∑ z ∈ T, G.degree z : ℕ) : ℤ) =
+        ((T.card * (T.card - 1) + ∑ z ∈ Tᶜ, min (G.degree z) T.card : ℕ) : ℤ) := by
+      push_cast [Nat.cast_sub (by omega : 1 ≤ T.card)]
+      rw [hcard]
+      omega
+    exact_mod_cast hcast
 
 /-! ## 8.1′ The forced pair, without an order
 
@@ -3159,9 +3103,9 @@ theorem fourCorner_of_yFamilyPivot {d : V → ℕ} {v : V} (h : YFamilyPivot d v
       not_corner_ax := fun hax => hnotax (mem_realizableNeighborhoods.mpr hax) }
 
 /-- **Lemma 8.3d (lower-witness propagation).** Manuscript §8.2: if `F_D(t) < 0` for some `t ≤ k−2`,
-then `F_D(k−1) < 0`. This is the step whose first draft contained a demonstrably false displayed
-description of the top-`t` entries, refuted on 190 of 409 configurations by the §8.2 adversary on
-2026-08-16; the repaired argument runs through the unconditional agreement of the top-`t` SUMS. -/
+then `F_D(k−1) < 0`. The proof takes the union of all tied top-`t` sets in a realization of `U`, uses
+`TightUnion.egTight_biUnion` to jump directly to rank `k−1`, and crosses between the set and sorted
+forms with `egTight_iff_erdosGallaiSlack_eq_zero_of_topFinset`. -/
 theorem lemma_8_3d_lower_witness_propagation {d : V → ℕ} {v : V} {C₀ : Finset V} {c a b x : V}
     (hfc : FourCorner d v C₀ c a b x) {t : ℕ} (ht : t + 2 ≤ d v)
     (hneg : erdosGallaiSlack (fourCornerD d v C₀ a x) t < 0) :
@@ -3827,225 +3771,125 @@ theorem lemma_8_3d_lower_witness_propagation {d : V → ℕ} {v : V} {C₀ : Fin
     omega
   have hU_eq_zero : erdosGallaiSlack U t = 0 := by omega
   let GU : Realization U := realizationOfGraphical hUgraphical
-  obtain ⟨T, hTcard, hTtop, hT, hTc⟩ := exists_topBlock U ht_cardW
-  have hT_ge : ∀ z ∈ T, d c - 1 ≤ U z := by
+  let HW : Finset W := Finset.univ.filter P
+  have hHWcard : HW.card = d v - 1 := by
+    change (Finset.univ.val.filter P).card = d v - 1
+    exact hPcard
+  have hHUcard : HU.card = g := by
+    change (Finset.univ.val.filter Q).card = g
+    exact hQcard
+  have hHUsub : HU ⊆ HW := by
     intro z hz
-    by_contra hnot
-    have hzlt : U z < d c - 1 := Nat.lt_of_not_ge hnot
-    let K : Finset W := Finset.univ.filter (fun y ↦ d c - 1 ≤ U y)
-    have hsub : K ⊆ T.erase z := by
-      intro y hy
-      have hyge : d c - 1 ≤ U y := (Finset.mem_filter.mp hy).2
-      have hyT : y ∈ T := by
-        by_contra hyT
-        have hyTc : y ∈ Tᶜ := by simpa using hyT
-        have := hTtop z hz y hyTc
-        omega
-      have hyne : y ≠ z := by
-        intro hyz
-        subst y
-        omega
-      exact Finset.mem_erase.mpr ⟨hyne, hyT⟩
-    have hcardle := Finset.card_le_card hsub
-    have hKcard : t ≤ K.card := by
-      change t ≤ (Finset.univ.filter (fun y ↦ d c - 1 ≤ U y)).card
-      exact hgeU
-    rw [Finset.card_erase_of_mem hz, hTcard] at hcardle
+    have hzQ : Q z := by simpa [HU] using hz
+    have hzP : P z := by
+      by_contra hnotP
+      have hUz : U z ≤ d z.val := by simp [U, fourCornerU, residualDegree]
+      have hzdeg := hdegree_out z hnotP
+      simp only [Q] at hzQ
+      omega
+    simp [HW, hzP]
+  let E : Finset W := HW \ HU
+  have hEcard : E.card = (d v - 1) - g := by
+    simp only [E]
+    rw [Finset.card_sdiff_of_subset hHUsub, hHWcard, hHUcard]
+  have hchoose_pos : 0 < t - g := by omega
+  have hchoose_le : t - g ≤ E.card := by
+    rw [hEcard]
     omega
-  have hTdeg : ∀ z ∈ T, T.card ≤ GU.graph.degree z := by
+  let 𝒯 : Finset (Finset W) :=
+    (E.powersetCard (t - g)).image (fun J ↦ HU ∪ J)
+  have h𝒯ne : 𝒯.Nonempty := by
+    obtain ⟨J, hJsub, hJcard⟩ := Finset.exists_subset_card_eq hchoose_le
+    refine ⟨HU ∪ J, ?_⟩
+    apply Finset.mem_image.mpr
+    exact ⟨J, Finset.mem_powersetCard.mpr ⟨hJsub, hJcard⟩, rfl⟩
+  have h𝒯card : ∀ T ∈ 𝒯, T.card = t := by
+    intro T hT
+    obtain ⟨J, hJ, rfl⟩ := Finset.mem_image.mp hT
+    have hJdata := Finset.mem_powersetCard.mp hJ
+    have hdisj : Disjoint HU J := Finset.disjoint_left.mpr (by
+      intro z hzHU hzJ
+      exact (Finset.mem_sdiff.mp (hJdata.1 hzJ)).2 hzHU)
+    rw [Finset.card_union_of_disjoint hdisj, hHUcard, hJdata.2]
+    omega
+  have h𝒯top : ∀ T ∈ 𝒯, ∀ z ∈ T, ∀ y ∈ Tᶜ, U z ≥ U y := by
+    intro T hT
+    obtain ⟨J, hJ, rfl⟩ := Finset.mem_image.mp hT
+    have hJsub := (Finset.mem_powersetCard.mp hJ).1
+    intro z hz y hy
+    have hzge : d c - 1 ≤ U z := by
+      rcases Finset.mem_union.mp hz with hzHU | hzJ
+      · have hzQ : Q z := by simpa [HU] using hzHU
+        simp only [Q] at hzQ
+        omega
+      · have hzE := hJsub hzJ
+        have hzHW := (Finset.mem_sdiff.mp hzE).1
+        exact hP_ge_U z ((Finset.mem_filter.mp hzHW).2)
+    have hyHU : y ∉ HU := by
+      intro hyHU
+      exact (Finset.mem_compl.mp hy) (Finset.mem_union_left J hyHU)
+    have hyQ : ¬ Q y := by simpa [HU] using hyHU
+    simp only [Q] at hyQ
+    omega
+  have h𝒯tight : ∀ T ∈ 𝒯, TightUnion.EGTight GU.graph T := by
+    intro T hT
+    have htopGraph : ∀ z ∈ T, ∀ y ∈ Tᶜ, GU.graph.degree z ≥ GU.graph.degree y := by
+      simpa only [GU.degree_eq] using h𝒯top T hT
+    have hzero : erdosGallaiSlack (fun z ↦ GU.graph.degree z) t = 0 := by
+      simpa only [GU.degree_eq] using hU_eq_zero
+    exact (egTight_iff_erdosGallaiSlack_eq_zero_of_topFinset GU.graph (by omega)
+      (h𝒯card T hT) htopGraph).mpr hzero
+  have h𝒯union : 𝒯.biUnion id = HW := by
+    apply Finset.Subset.antisymm
+    · intro z hz
+      obtain ⟨T, hT, hzT⟩ := Finset.mem_biUnion.mp hz
+      obtain ⟨J, hJ, rfl⟩ := Finset.mem_image.mp hT
+      rcases Finset.mem_union.mp hzT with hzHU | hzJ
+      · exact hHUsub hzHU
+      · exact (Finset.mem_sdiff.mp ((Finset.mem_powersetCard.mp hJ).1 hzJ)).1
+    · intro z hzHW
+      by_cases hzHU : z ∈ HU
+      · obtain ⟨T, hT⟩ := h𝒯ne
+        refine Finset.mem_biUnion.mpr ⟨T, hT, ?_⟩
+        obtain ⟨J, hJ, rfl⟩ := Finset.mem_image.mp hT
+        exact Finset.mem_union_left J hzHU
+      · have hzE : z ∈ E := Finset.mem_sdiff.mpr ⟨hzHW, hzHU⟩
+        have hzAll : z ∈ (E.powersetCard (t - g)).biUnion id := by
+          rw [Finset.powersetCard_biUnion (by omega) hchoose_le]
+          exact hzE
+        obtain ⟨J, hJ, hzJ⟩ := Finset.mem_biUnion.mp hzAll
+        refine Finset.mem_biUnion.mpr ⟨HU ∪ J, ?_, Finset.mem_union_right HU hzJ⟩
+        exact Finset.mem_image.mpr ⟨J, hJ, rfl⟩
+  have h𝒯deg : ∀ z ∈ 𝒯.biUnion id, t ≤ GU.graph.degree z := by
     intro z hz
-    rw [GU.degree_eq, hTcard]
-    have := hT_ge z hz
+    have hzHW : z ∈ HW := by rwa [h𝒯union] at hz
+    rw [GU.degree_eq]
+    have hzge := hP_ge_U z (Finset.mem_filter.mp hzHW).2
     omega
-  obtain ⟨u, huT, huHU⟩ : ∃ u ∈ T, u ∉ HU := by
-    by_contra hnone
-    have hsub : T ⊆ HU := by
-      intro z hz
-      by_contra hzHU
-      exact hnone ⟨z, hz, hzHU⟩
-    have hcardle := Finset.card_le_card hsub
-    have hHUcard : HU.card = g := by
-      change (Finset.univ.filter Q).card = g
-      exact hQcard
-    rw [hTcard, hHUcard] at hcardle
+  have hHWtight : TightUnion.EGTight GU.graph HW := by
+    rw [← h𝒯union]
+    exact TightUnion.egTight_biUnion GU.graph h𝒯ne h𝒯card h𝒯tight h𝒯deg
+  have hHWtop : ∀ z ∈ HW, ∀ y ∈ HWᶜ,
+      GU.graph.degree z ≥ GU.graph.degree y := by
+    intro z hz y hy
+    rw [GU.degree_eq, GU.degree_eq]
+    have hzge := hP_ge_U z (Finset.mem_filter.mp hz).2
+    have hyP : ¬ P y := by
+      intro hyP
+      exact (Finset.mem_compl.mp hy) (by simp [HW, hyP])
+    have hydeg := hdegree_out y hyP
+    have hUy : U y ≤ d y.val := by simp [U, fourCornerU, residualDegree]
     omega
-  have hUu : U u = d c - 1 := by
-    have hle : U u ≤ d c - 1 := by
-      have hnotQ : ¬ Q u := by
-        simpa [HU] using huHU
-      simp only [Q] at hnotQ
-      omega
-    exact le_antisymm hle (hT_ge u huT)
-  have hslackT := erdosGallaiSlack_eq_of_topBlock U hTcard hT hTc
-  have hsetZ :
-      ((t : ℤ) * ((t : ℤ) - 1)) +
-          (∑ z ∈ Tᶜ, (min (U z) t : ℤ)) - (∑ z ∈ T, (U z : ℤ)) = 0 := by
-    rw [← hslackT, hU_eq_zero]
-  have hsetNat :
-      ∑ z ∈ T, U z = T.card * (T.card - 1) + ∑ z ∈ Tᶜ, min (U z) T.card := by
-    have htpos : 0 < t := by omega
-    have hcast : ((∑ z ∈ T, U z : ℕ) : ℤ) =
-        ((T.card * (T.card - 1) + ∑ z ∈ Tᶜ, min (U z) T.card : ℕ) : ℤ) := by
-      rw [hTcard]
-      push_cast [Nat.cast_sub htpos]
-      omega
-    exact_mod_cast hcast
-  have hsetGraph :
-      ∑ z ∈ T, GU.graph.degree z =
-        T.card * (T.card - 1) + ∑ z ∈ Tᶜ, min (GU.graph.degree z) T.card := by
-    simpa only [GU.degree_eq] using hsetNat
-  have hcountU_upper :
-      (Finset.univ.filter (fun z ↦ t ≤ U z)).card ≤ d c := by
-    have hbound := card_highDegree_le_succ_degree GU.graph huT hTdeg hsetGraph
-    have hbound' : (Finset.univ.filter (fun z ↦ t ≤ U z)).card ≤ U u + 1 := by
-      simpa only [hTcard, GU.degree_eq] using hbound
-    rw [hUu] at hbound'
-    omega
-  let B : Finset V := insert b (insert a (insert c C₀))
-  have hvB : v ∉ B := by
-    simp [B, hfc.ne_pivot.1.symm, hfc.ne_pivot.2.1.symm,
-      hfc.ne_pivot.2.2.1.symm, hfc.pivot_not_mem]
-  have hBcard : B.card = d v + 1 := by
-    have hbc : b ≠ c := hfc.distinct.2.1.symm
-    have hba : b ≠ a := hfc.distinct.2.2.2.1.symm
-    have hac : a ≠ c := hfc.distinct.1.symm
-    simp [B, hfc.not_mem.1, hfc.not_mem.2.1, hfc.not_mem.2.2.1,
-      hbc, hba, hac]
-    omega
-  have hB_ge_U : ∀ z : W, z.val ∈ B → t ≤ U z := by
-    rintro ⟨z, hzv⟩ hz
-    simp only [B, Finset.mem_insert] at hz
-    rcases hz with rfl | rfl | rfl | hzC
-    · rw [hUb]
-      omega
-    · rw [hUa]
-      omega
-    · rw [hUc]
-      omega
-    · have hPz : P ⟨z, hzv⟩ := by simp [P, H, hzC]
-      have := hP_ge_U ⟨z, hzv⟩ hPz
-      omega
-  have hcountU_lower : d v + 1 ≤
-      (Finset.univ.filter (fun z ↦ t ≤ U z)).card := by
-    let K : Finset W := Finset.univ.filter (fun z ↦ z.val ∈ B)
-    have hsub : K ⊆ Finset.univ.filter (fun z ↦ t ≤ U z) := by
-      intro z hz
-      simp only [K, Finset.mem_filter, Finset.mem_univ, true_and] at hz ⊢
-      exact hB_ge_U z hz
-    have hcardle := Finset.card_le_card hsub
-    have hKcard : K.card = d v + 1 := by
-      change (Finset.univ.val.filter (fun z : W ↦ z.val ∈ B)).card = d v + 1
-      rw [block_card B hvB, hBcard]
-    rw [hKcard] at hcardle
-    exact hcardle
-  have hfilterDU : Finset.univ.filter (fun z : W ↦ t ≤ D z) =
-      Finset.univ.filter (fun z : W ↦ t ≤ U z) := by
-    ext z
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
-    by_cases hzc : z.val = c
-    · have : z = cv := Subtype.ext hzc
-      subst z
-      rw [hDc, hUc]
-      omega
-    by_cases hza : z.val = a
-    · have : z = av := Subtype.ext hza
-      subst z
-      rw [hDa, hUa]
-      omega
-    rw [hDU_of_ne z hzc hza]
-  have hcountDU : (Finset.univ.filter (fun z : W ↦ t ≤ D z)).card =
-      (Finset.univ.filter (fun z : W ↦ t ≤ U z)).card := congr_arg Finset.card hfilterDU
-  have hr_large : d v + 1 ≤ d c := hcountU_lower.trans hcountU_upper
-  let m := d v - 1
-  have htm : t ≤ m := by simp only [m]; omega
-  have hm_pos : 0 < m := by simp only [m]; omega
-  have hgeD_m_threshold :
-      m ≤ (Finset.univ.val.filter (fun z ↦ d c - 1 ≤ D z)).card := by
-    have hsub : (Finset.univ.filter P) ⊆
-        Finset.univ.filter (fun z ↦ d c - 1 ≤ D z) := by
-      intro z hz
-      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hz ⊢
-      exact hP_ge_D z hz
-    have hcardle := Finset.card_le_card hsub
-    have hPcard' : (Finset.univ.filter P).card = m := by
-      change (Finset.univ.val.filter P).card = d v - 1
-      exact hPcard
-    rw [hPcard'] at hcardle
-    exact hcardle
-  have htopDm := take_sum_eq_of_threshold D (d c - 1) (g + 1) m (by
-      change HD.card = g + 1
-      exact hHDcard) (by omega) hgeD_m_threshold
-  have htop_growth :
-      (((Finset.univ.val.map D).sort (· ≥ ·)).take m).sum =
-        (((Finset.univ.val.map D).sort (· ≥ ·)).take t).sum +
-          (m - t) * (d c - 1) := by
-    have hsplit : m - (g + 1) = (t - (g + 1)) + (m - t) := by omega
-    rw [hsplit, Nat.add_mul] at htopDm
-    change _ = (∑ z ∈ HD, D z) + _ at htopD htopDm
-    omega
-  have hgeDm : m ≤ (Finset.univ.val.filter (fun z ↦ m ≤ D z)).card := by
-    have hsub : (Finset.univ.filter (fun z ↦ d c - 1 ≤ D z)) ⊆
-        Finset.univ.filter (fun z ↦ m ≤ D z) := by
-      intro z hz
-      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hz ⊢
-      omega
-    have hcardle := Finset.card_le_card hsub
-    have hge' : m ≤
-        (Finset.univ.filter (fun z ↦ d c - 1 ≤ D z)).card := hgeD_m_threshold
-    exact hge'.trans hcardle
-  have htopminDm := top_min_sum_eq D m hgeDm
-  let ND : Finset W := Finset.univ.filter (fun z ↦ t ≤ D z)
-  have hNDcard : ND.card ≤ d c := by
-    change (Finset.univ.filter (fun z : W ↦ t ≤ D z)).card ≤ d c
-    rw [hcountDU]
-    exact hcountU_upper
-  have htotal_growth_nat :
-      ∑ z, min (D z) m ≤ ∑ z, min (D z) t + d c * (m - t) := by
-    have hpoint (z : W) : min (D z) m ≤
-        min (D z) t + if t ≤ D z then m - t else 0 := by
-      by_cases hz : t ≤ D z
-      · simp only [hz, if_true]
-        rw [min_eq_right hz]
-        exact (min_le_right (D z) m).trans_eq (Nat.add_sub_of_le htm).symm
-      · have hzlt : D z < t := Nat.lt_of_not_ge hz
-        have hzle : D z ≤ m := hzlt.le.trans htm
-        simp [hz, min_eq_left hzlt.le, min_eq_left hzle]
-    calc
-      (∑ z, min (D z) m) ≤
-          ∑ z, (min (D z) t + if t ≤ D z then m - t else 0) :=
-        Finset.sum_le_sum (fun z _ ↦ hpoint z)
-      _ = (∑ z, min (D z) t) + ND.card * (m - t) := by
-        rw [Finset.sum_add_distrib]
-        congr 1
-        rw [← Finset.sum_filter]
-        simp [ND]
-      _ ≤ (∑ z, min (D z) t) + d c * (m - t) := by
-        exact Nat.add_le_add_left (Nat.mul_le_mul_right (m - t) hNDcard) _
-  have htotal_growth :
-      (∑ z, (min (D z) m : ℤ)) ≤
-        (∑ z, (min (D z) t : ℤ)) +
-          ((d c : ℤ) * ((m : ℤ) - (t : ℤ))) := by
-    have hcast : ((∑ z, min (D z) m : ℕ) : ℤ) ≤
-        (((∑ z, min (D z) t) + d c * (m - t) : ℕ) : ℤ) := by
-      exact_mod_cast htotal_growth_nat
-    push_cast [Nat.cast_sub htm] at hcast
-    exact hcast
-  have htop_growthZ :
-      ((((Finset.univ.val.map D).sort (· ≥ ·)).take m).sum : ℤ) =
-        ((((Finset.univ.val.map D).sort (· ≥ ·)).take t).sum : ℤ) +
-          ((m : ℤ) - (t : ℤ)) * ((d c : ℤ) - 1) := by
-    have hcast := congrArg (fun n : ℕ ↦ (n : ℤ)) htop_growth
-    rw [Nat.cast_add, Nat.cast_mul, Nat.cast_sub htm,
-      Nat.cast_sub (by omega : 1 ≤ d c)] at hcast
-    exact hcast
-  have hslack_le : erdosGallaiSlack D m ≤ erdosGallaiSlack D t := by
-    rw [slack_total_form D m, slack_total_form D t, htopminDm, htopminD]
-    simp only [List.map_id_fun', id_eq]
-    rw [coe_sum, coe_sum, htop_growthZ]
-    nlinarith only [htotal_growth]
+  have hUmzeroRaw : erdosGallaiSlack (fun z ↦ GU.graph.degree z) (d v - 1) = 0 :=
+    (egTight_iff_erdosGallaiSlack_eq_zero_of_topFinset GU.graph (by omega)
+      hHWcard hHWtop).mp hHWtight
+  have hUmzero : erdosGallaiSlack U (d v - 1) = 0 := by
+    simpa only [GU.degree_eq] using hUmzeroRaw
+  have hslackU := (lemma_8_3b_slack_identities hfc).1
+  change erdosGallaiSlack U (d v - 1) = erdosGallaiSlack D (d v - 1)
+    + 1 + (if d a ≤ d v - 1 then 1 else 0) at hslackU
   change erdosGallaiSlack D (d v - 1) < 0
-  change erdosGallaiSlack D m < 0
-  exact hslack_le.trans_lt hneg
+  omega
 
 /-- **Lemma 8.3e (one-sided bound).** Manuscript §8.2: `q ≥ k`. -/
 theorem lemma_8_3e_one_sided_bound {d : V → ℕ} {v : V} {C₀ : Finset V} {c a b x : V}
@@ -9278,35 +9122,45 @@ private theorem separator_col_eq_of_sum_full {m n : ℕ} (M N : ZeroOneMat m n) 
     omega
 
 private theorem separator_isActive_of_model {m n : ℕ} {d : V → ℕ}
-    {r : Fin m → ℕ} {s : Fin n → ℕ} (hd : MainLine d)
+    {r : Fin m → ℕ} {s : Fin n → ℕ} (hindec : ¬ TyshkevichDecomposable d)
+    (hnb : ¬ (RealizationGraph d).Colorable 2)
     (model : SplitIncidenceModel d r s) : IsActive r s := by
   classical
+  have hrealDiff : ∃ G H : Realization d, G ≠ H := by
+    by_contra hall
+    push_neg at hall
+    apply hnb
+    let color : Realization d → Fin 2 := fun _ => 0
+    refine ⟨⟨color, ?_⟩⟩
+    intro G H hGH
+    exact (hGH.ne (hall G H)).elim
+  obtain ⟨G, H, hGH⟩ := hrealDiff
+  let M₀ := model.realizationIso.symm G
+  let N₀ := model.realizationIso.symm H
+  have hM₀N₀ : M₀ ≠ N₀ := by
+    intro h
+    apply hGH
+    simpa [M₀, N₀] using congrArg model.realizationIso h
+  have hcell : ∃ i : Fin m, ∃ j : Fin n, M₀.val i j ≠ N₀.val i j := by
+    by_contra h
+    push_neg at h
+    apply hM₀N₀
+    apply Subtype.ext
+    funext i j
+    exact h i j
+  obtain ⟨i₀, j₀, _⟩ := hcell
   have hrowDiff (i : Fin m) : ∃ M N : MarginClass r s, rowPat i M ≠ rowPat i N := by
-    let v := model.vertexEquiv (Sum.inl i)
-    obtain ⟨S, T, hST, ⟨G, hG⟩, ⟨H, hH⟩⟩ := hd.active v
-    let M := model.realizationIso.symm G
-    let N := model.realizationIso.symm H
+    obtain ⟨M, N, hMN⟩ :=
+      cellVaries_of_tyshkevichIndecomposable model G hindec i j₀
     refine ⟨M, N, ?_⟩
     intro hpat
-    apply hST
-    calc
-      S = G.neighborFinset v := hG.symm
-      _ = H.neighborFinset v := by
-        simpa [v, M, N] using (model.rowPat_eq_iff_neighborFinset_eq M N i).1 hpat
-      _ = T := hH
+    exact hMN (congrFun hpat j₀)
   have hcolDiff (j : Fin n) : ∃ M N : MarginClass r s, colPat j M ≠ colPat j N := by
-    let v := model.vertexEquiv (Sum.inr j)
-    obtain ⟨S, T, hST, ⟨G, hG⟩, ⟨H, hH⟩⟩ := hd.active v
-    let M := model.realizationIso.symm G
-    let N := model.realizationIso.symm H
+    obtain ⟨M, N, hMN⟩ :=
+      cellVaries_of_tyshkevichIndecomposable model G hindec i₀ j
     refine ⟨M, N, ?_⟩
     intro hpat
-    apply hST
-    calc
-      S = G.neighborFinset v := hG.symm
-      _ = H.neighborFinset v := by
-        simpa [v, M, N] using (model.colPat_eq_iff_neighborFinset_eq M N j).1 hpat
-      _ = T := hH
+    exact hMN (congrFun hpat i₀)
   constructor
   · intro i
     obtain ⟨M, N, hMN⟩ := hrowDiff i
@@ -9913,7 +9767,8 @@ private theorem separator_buffer_completed {d : V → ℕ} (hd : MainLine d)
     intro heq
     apply hXY
     simpa [a, b] using congrArg model.realizationIso heq
-  have hact : IsActive r s := separator_isActive_of_model hd model
+  have hact : IsActive r s :=
+    separator_isActive_of_model hd.indecomposable hd.nonbipartite model
   have hnb : ¬ ∃ col : MarginClass r s → Bool,
       IsProper2Coloring (flipGraph r s) col := by
     rintro ⟨col, hcol⟩
@@ -11321,7 +11176,6 @@ private theorem mainLineWitness_indecomposable :
 
 /-- The one-pass main-line hypotheses are jointly satisfiable. -/
 theorem mainLine_witness : MainLine (![3, 3, 3, 3, 2] : Fin 5 → ℕ) where
-  active := mainLineWitness_active
   indecomposable := mainLineWitness_indecomposable
   nonbipartite := mainLineWitness_nonbipartite
   notK3 := mainLineWitness_notK3
@@ -11644,7 +11498,6 @@ theorem yfw_indecomposable : ¬ TyshkevichDecomposable yfwD := by
 
 /-- **The exceptional branch is inhabited on the main line.** -/
 theorem yfw_mainLine : MainLine yfwD where
-  active := yfw_active
   indecomposable := yfw_indecomposable
   nonbipartite := yfw_nonbipartite
   notK3 := yfw_notK3
@@ -13685,31 +13538,17 @@ theorem realizationGraph_maximally_hamiltonian {V : Type u} [Fintype V] [Decidab
     · exact theorem_one e ((barrus_theorem9_bipartite_iff_triangleFree e).mp hbip)
     by_cases hdec : TyshkevichDecomposable e
     · exact isMH_of_tyshkevichDecomposable_of_IH hdec smallerIH
-    by_cases hactive : Active e
-    · by_cases hnotK3 : NotK3Base e
-      · apply mainLine_MH_of_IH
-        · refine ⟨hactive, hdec, ?_, hnotK3⟩
-          intro hcolorable
-          obtain ⟨coloring⟩ := hcolorable
-          apply hbip
-          refine ⟨fun G => finTwoEquiv (coloring G), ?_⟩
-          intro G H hGH hsame
-          exact coloring.valid hGH (finTwoEquiv.injective hsame)
-        · exact smallerIH
-      · exact k3Base_maximally_hamiltonian hbip hnotK3
-    · let G₀ : Realization e := Classical.choice hgraphical
-      simp only [Active, not_forall] at hactive
-      obtain ⟨v, hv⟩ := hactive
-      let S := G₀.neighborFinset v
-      have hS : ∀ G : Realization e, G.neighborFinset v = S := by
-        intro G
-        by_contra hne
-        apply hv
-        exact ⟨S, G.neighborFinset v, fun h => hne h.symm, ⟨G₀, rfl⟩, ⟨G, rfl⟩⟩
-      obtain ⟨iso⟩ := realizationGraph_iso_of_inactive hgraphical hS
-      have hlt : Fintype.card {x : W // x ≠ v} < Fintype.card W :=
-        Fintype.card_subtype_lt (p := fun x : W => x ≠ v) (x := v) (by simp)
-      exact isMH_iso iso (smallerIH _ (residualDegree e v S) hlt)
+    by_cases hnotK3 : NotK3Base e
+    · apply mainLine_MH_of_IH
+      · refine ⟨hdec, ?_, hnotK3⟩
+        intro hcolorable
+        obtain ⟨coloring⟩ := hcolorable
+        apply hbip
+        refine ⟨fun G => finTwoEquiv (coloring G), ?_⟩
+        intro G H hGH hsame
+        exact coloring.valid hGH (finTwoEquiv.injective hsame)
+      · exact smallerIH
+    · exact k3Base_maximally_hamiltonian hbip hnotK3
   · refine Or.inl ?_
     intro G _ _
     exact (hgraphical ⟨G⟩).elim
@@ -13749,14 +13588,14 @@ theorem realizationGraph_homogeneously_traceable {V : Type u} [Fintype V] [Decid
 
 /-- **The residual case that the one-pass assembly actually proves** (`SEC_ASSEMBLY.md` §10.2–10.3).
 
-§10.1 splits into five branches: bipartite (Theorem 3.1, by classification), Tyshkevich-decomposable
-(Corollary 4.3, propagating from factors with fewer ground vertices), some inactive vertex (the
-reduction `G(d) ≅ G(d*)`), the `K₃` base graph (directly), and this one — `d` active, indecomposable,
-non-bipartite, and not `K₃`, which is exactly `MainLine d`.
+§10.1 splits into four branches: bipartite (Theorem 3.1, by classification),
+Tyshkevich-decomposable (Corollary 4.3, propagating from factors with fewer ground vertices), the
+`K₃` base graph (directly), and this one — `d` indecomposable, non-bipartite, and not `K₃`, which
+is exactly `MainLine d`.
 
-Separating this from `realizationGraph_maximally_hamiltonian` is deliberate: the four other branches
-are reductions to strictly smaller grounds, while THIS is where `separator_buffer`, `sbPlus`, `qstar`
-and `ord` are consumed.
+Separating this from `realizationGraph_maximally_hamiltonian` is deliberate: the other three branches
+are handled by classification, decomposition, or the base case, while THIS is where
+`separator_buffer`, `sbPlus`, `qstar` and `ord` are consumed.
 
 **Its axiom trace is NOT sharper than the main theorem's, and cannot be.** The docstring claimed
 otherwise until 2026-08-19, when an adversary measured the two and found them byte-identical. The

@@ -3,7 +3,7 @@ Copyright (c) 2026 Jeffrey S. Baggett. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jeffrey S. Baggett
 -/
-import BrualdiLean.RealizationGraph.Transfer
+import Realization.Transfer
 import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Data.Finset.SymmDiff
 

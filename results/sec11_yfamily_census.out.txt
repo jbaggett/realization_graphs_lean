@@ -1,0 +1,10 @@
+# pinned output of compute/sec11_yfamily_census.py, run 2026-09-07
+
+  order 1: 0 graphical sequence(s) with a Y-family pivot
+  order 2: 0 graphical sequence(s) with a Y-family pivot
+  order 3: 0 graphical sequence(s) with a Y-family pivot
+  order 4: 0 graphical sequence(s) with a Y-family pivot
+  order 5: 1 graphical sequence(s) with a Y-family pivot   [(3, 2, 2, 2, 1)]
+  order 6: 4 graphical sequence(s) with a Y-family pivot   [(3, 2, 2, 2, 1, 0), (4, 2, 2, 2, 1, 1), (4, 4, 3, 3, 3, 1), (5, 4, 3, 3, 3, 2)]
+
+RESULT: PASS -- none through order four, one at order five, four at order six, and the witnesses are the ones Section 11.2 prints. Written to /home/jbaggett/combinatorics/topics/flipgraphs/realization/compute/data/sec11_yfamily_census.json

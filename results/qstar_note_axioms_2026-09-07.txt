@@ -1,0 +1,49 @@
+  ok   Section 7.1, the Gale order itself galeLE_iff_pointwise
+  ok   Section 7.5, that a yFamily IS a shifted family yFamily_isShifted
+  ok   Sections 7.5-7.6, the ambient-coordinate reading usedGround_downwardClosed
+  ok   Sections 7.5-7.6, the ambient-coordinate reading initialSegment_downwardClosed
+  ok   Lemma 7.1 (a) count                card_singleDecrements_insert_erase_Iic
+  ok   Lemma 7.1 (a) list                 singleDecrements_insert_erase_Iic
+  ok   Lemma 7.1 (b)                      lemma7_1b_one_decrement
+  ok   Lemma 7.1 (c)                      lemma7_1c_two_decrements
+  ok   Lemma 7.1 (d) bound                four_le_card_singleDecrements_of_two_outside
+  ok   Lemma 7.1 (d), four distinct members of F other than W -- NOT stated as decrements of W four_distinct_decrements_of_two_outside
+  ok   Lemma 7.2 (i)-(iv) less the adjacency lemma1_bottom
+  ok   Lemma 7.2 (iii) adjacency          exists_adjacent_gale_bottom_pair
+  ok   Lemma 7.1 (d) over [n]             lemma7_1d_four_decrements
+  ok   Lemma 7.10 involution              dualSet_dualSet
+  ok   Lemma 7.10 cardinality             card_dualSet
+  ok   Lemma 7.10 rank bijection          dualSetRankEquiv
+  ok   Lemma 7.2 (i) coordinates          galeLeast_eq_initialSegment
+  ok   Lemma 7.2 (ii) coordinates         galeSecondLeast_eq_secondInitialSegment
+  ok   Corollary 7.3                      exchangeGraph_not_bipartite_of_three_le
+  ok   the other pairs of a clique-sum, from Theorem 7.7 hamPath_of_cliqueSum_of_other_pair
+  ok   Lemma 7.4 (the obstruction)        no_hamPath_of_cliqueSum
+  ok   Corollary 7.9 as printed           qstar_hamConnected_of_galeGreatest
+  ok   Lemma 7.5                          lemma2_universalPair_is_galeLeast
+  ok   Lemma 7.5 coordinates              cliqueSum_universalPair_coordinates
+  ok   Theorem 7.6, the two containment conditions are exclusive (no arm, no nonemptiness) lemma3_two_arms
+  ok   Theorem 7.6, F is exactly a yFamily (contiguity lives in that definition) lemma3_arms_are_contiguous
+  ok   Theorem 7.6 converse               yFamily_isCliqueSum
+  ok   Theorem 7.7  -- (Q*)               qstar
+  ok   Corollary 7.8                      not_yFamily_isHamConnected
+  ok   Corollary 7.9 incomparability      cliqueSum_exists_incomparable_galeMaximal
+  ok   Corollary 7.9 no exception         qstar_no_exception_of_principal
+  ok   Corollary 7.9 Hamilton-connected   qstar_principal_isHamConnected
+  ok   Lemma 7.10 (i) Gale transport      galeLE_dualSet_iff
+  ok   Lemma 7.10 (ii)                    card_dualSet_symmDiff
+  ok   Lemma 7.10 (iii)                   mem_iff_dualElem_notMem_dualSet
+  ok   Lemma 7.10 (iv)                    subset_iff_dualSet_subset
+  ok   Lemma 7.10 shiftedness             isShifted_dualFamily
+  ok   Lemma 7.10 the isomorphism         exchangeGraph_dualIso
+  ok   Lemma 7.10 layers above            image_layerAbove_dualSet
+  ok   Lemma 7.10 layers below            image_layerBelow_dualSet
+  ok   Lemma 7.10 Y-families              isCliqueSum_dual_iff
+  ok   Lemma 7.10, the containment identity behind the arm exchange innerArm_dual_iff_outerArm
+  ok   Lemma 7.10, the same identity, converse direction outerArm_dual_iff_innerArm
+  ok   Lemma 7.10 arm exchange, inner onto outer, ON THE FULL GROUND image_dualSet_yInnerArm
+  ok   Lemma 7.10 arm exchange, outer onto inner, ON THE FULL GROUND image_dualSet_yOuterArm
+  ok   Theorem 7.11 (crossing lemma)      crossingLemma
+
+RESULT: PASS — all 46 of the note's declarations trace to {propext, Classical.choice, Quot.sound} and nothing else.
+        No cited axiom, no sorryAx, no native_decide certificate on the note's surface.

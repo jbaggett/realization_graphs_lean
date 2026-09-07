@@ -9,7 +9,13 @@ relaxedAutoImplicit = false
 weak.linter.mathlibStandardSet = true
 maxSynthPendingDepth = 3
 
-# The companion paper's Lean development, pinned to the tag its arXiv submission cites.
+# The companion paper's Lean development, pinned to `realization-dep-v1`.
+# NOT `arxiv-v3`, and the difference is not cosmetic: this development needs
+# `nonbip_has_triangle_of_cellVaries` and `buffer_line_exists_of_cellVaries` from that project's
+# `Sec5.lean`, and neither exists at `arxiv-v3` or at any earlier tag.  Until 2026-09-07 this
+# repository pinned `arxiv-v3` and therefore could not build at all.  `realization-dep-v1` marks the
+# state this paper was actually verified against; `arxiv-v1` and `arxiv-v3` are untouched and remain
+# exactly what that paper's arXiv posting and journal submission cite.
 # Depending rather than vendoring is deliberate: the tag is already the citable artifact for that
 # paper, so this links two papers to one immutable object instead of creating a second copy, and it
 # records WHICH version this paper was verified against — which a vendored copy silently loses the
@@ -17,23 +23,49 @@ maxSynthPendingDepth = 3
 [[require]]
 name = "brualdi_lean"
 git = "https://github.com/jbaggett/brualdi-interchange-lean.git"
-rev = "arxiv-v3"
+rev = "realization-dep-v1"
 subDir = "brualdi_lean"
 
-# The ten roots are exactly the `Realization` target of the working tree, so the module set built
-# here is the module set the paper's gates audit — 23 modules of ours, 18 from the companion.
 [[lean_lib]]
 name = "Realization"
 srcDir = "."
+
+# THE MODULES LIVE UNDER `Realization.`, NOT UNDER `BrualdiLean.`, AND THAT IS LOAD-BEARING.
+# Until 2026-09-07 they were `BrualdiLean.RealizationGraph.*` -- the path they have in the working
+# tree, where they sit in the same package as everything else.  Here they do not: `brualdi_lean` is
+# a pinned DEPENDENCY, and it declares a library named `BrualdiLean` that owns that whole module
+# namespace.  So Lake resolved every one of our modules against the dependency's source directory,
+# which does not contain them, and the build died on `no such file or directory` before reaching any
+# mathematics.  Two packages cannot both own `BrualdiLean.*`; moving ours out is the fix, and it
+# costs nothing that matters -- Lean namespaces are independent of module paths, so every
+# declaration name, and therefore every axiom trace the paper cites, is unchanged.
+#
+# EVERY module is listed, not just the ten entry points, so the module set is auditable against the
+# count the README prints.
 roots = [
-  "BrualdiLean.RealizationGraph.TheoremOne",
-  "BrualdiLean.RealizationGraph.SequelWave1",
-  "BrualdiLean.RealizationGraph.SeparatorTheorem",
-  "BrualdiLean.RealizationGraph.LayeredBase",
-  "BrualdiLean.RealizationGraph.InterfaceSaturation",
-  "BrualdiLean.RealizationGraph.TriangleProjection",
-  "BrualdiLean.RealizationGraph.LayerCapacity",
-  "BrualdiLean.RealizationGraph.PathWalks3",
-  "BrualdiLean.RealizationGraph.QStar",
-  "BrualdiLean.RealizationGraph.SBPlusOrd",
+  "Realization.BoundedCompositionFilter",
+  "Realization.CrownBase",
+  "Realization.Defs",
+  "Realization.DodgeCore",
+  "Realization.EqualityCase",
+  "Realization.InterfaceSaturation",
+  "Realization.IntervalLemma",
+  "Realization.LayerCapacity",
+  "Realization.LayeredBase",
+  "Realization.LemmaRCore",
+  "Realization.Observation0",
+  "Realization.PathCriterion",
+  "Realization.PathWalks",
+  "Realization.PathWalks3",
+  "Realization.Prism",
+  "Realization.QStar",
+  "Realization.QuotientAdjacency",
+  "Realization.SBPlusOrd",
+  "Realization.SeparatorTheorem",
+  "Realization.SequelWave1",
+  "Realization.Splice",
+  "Realization.TheoremOne",
+  "Realization.TightUnion",
+  "Realization.Transfer",
+  "Realization.TriangleProjection",
 ]

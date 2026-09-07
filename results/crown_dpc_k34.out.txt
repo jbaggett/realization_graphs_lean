@@ -1,0 +1,16 @@
+# pinned output of compute/crown_dpc_k34.py, run 2026-09-07
+
+Crown K_{6,6} - 6K_2 exhaustive paired-DPC census
+Rigid demands: canonical unoriented matching count; role count = canonical * 2^k k!
+
+k=2: total=1,485; parity-admissible=675; servable=675; failures=0
+k=3: total=13,860; parity-admissible=6,000; servable=6,000; failures=0
+k=4: total=51,975; parity-admissible=23,625; servable=21,690; failures=1,935
+     failure features (AA,BB,diagonal-cross,off-diagonal-cross): {'(0, 0, 3, 1)': 120, '(0, 0, 4, 0)': 15, '(1, 1, 0, 2)': 90, '(1, 1, 1, 1)': 720, '(1, 1, 2, 0)': 540, '(2, 2, 0, 0)': 450}
+
+k=2 Lemma 3.2 control: 450/450 canonical = 3,600/3,600 role tuples
+flexible k=3: total=130,394,880; parity-admissible=127,356,800; servable=127,356,800; failures=0; root orbits=3
+flexible k=4: total=4,868,075,520; parity-admissible=4,800,646,200; servable=4,798,561,110; failures=2,085,090; root orbits=6
+
+Validated positive rigid covers: 28,365
+Skipped: none

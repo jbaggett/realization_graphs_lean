@@ -50,8 +50,29 @@ import subprocess
 import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parents[4]
-GEN = REPO / "topics/flipgraphs/realization/compute/AxiomBaseline.lean"
+# TWO LAYOUTS, ONE FILE.  In the working tree this gate sits at
+# topics/flipgraphs/realization/compute/ and the modules are at lean/BrualdiLean/RealizationGraph/.
+# In the companion repository it sits at compute/ and they are at Realization/ -- they CANNOT be
+# under BrualdiLean.* there, because the pinned `brualdi_lean` dependency declares a library that
+# owns that module namespace.  Before 2026-09-07 the paths below were the working tree's,
+# unconditionally, so in a clone this gate measured nothing at all while still exiting 0 --
+# the failure `paper/COMPANION_REPO_PLAN.md` 3(c) predicted, shipped on 2026-08-28.
+_HERE = Path(__file__).resolve().parent
+if (_HERE.parents[3] / "lean" / "BrualdiLean" / "RealizationGraph").is_dir():   # working tree
+    REPO = _HERE.parents[3]
+    LAKE = REPO / "lean"
+    MODULES = LAKE / "BrualdiLean" / "RealizationGraph"
+    OLEANS = LAKE / ".lake" / "build" / "lib" / "lean" / "BrualdiLean" / "RealizationGraph"
+    GEN = REPO / "topics/flipgraphs/realization/compute/AxiomBaseline.lean"
+elif (_HERE.parent / "Realization").is_dir():                                   # companion repo
+    REPO = _HERE.parent
+    LAKE = REPO
+    MODULES = REPO / "Realization"
+    OLEANS = LAKE / ".lake" / "build" / "lib" / "lean" / "Realization"
+    GEN = _HERE / "AxiomBaseline.lean"
+else:
+    raise SystemExit("REFUSING: the Lean modules are in neither layout this gate knows -- "
+                     "it must never report a clean run against a tree it could not find.")
 FOUNDATIONS = {"propext", "Classical.choice", "Quot.sound"}
 
 # The strata, by the count each is declared to have in the generator's header.
@@ -123,7 +144,7 @@ EXPECT_CITED = {
 def run_generator():
     cmd = ("ulimit -v 67108864; LEAN_NUM_THREADS=6 "
            f"lake env lean {GEN}")          # ulimit takes KiB; 64 GiB.  never `lake -j`.
-    r = subprocess.run(["bash", "-c", cmd], cwd=REPO / "lean",
+    r = subprocess.run(["bash", "-c", cmd], cwd=LAKE,
                        capture_output=True, text=True)
     if r.returncode != 0:
         sys.exit(f"generator exited {r.returncode}:\n{r.stdout}\n{r.stderr}")
@@ -181,7 +202,7 @@ def open_declarations_audit(named):
     """
     part_c = {n.split(".")[-1] for p, n in named if p == "C" and n}
     problems = []
-    root = REPO / "lean" / "BrualdiLean" / "RealizationGraph"
+    root = MODULES
     for f in sorted(root.glob("*.lean")):
         if f.name == "HladikFink.lean":
             continue                     # parked in its own target, `sorry`-carrying by design
@@ -266,7 +287,7 @@ def open_declarations_audit(named):
     """
     part_c = {n.split(".")[-1] for p, n in named if p == "C" and n}
     problems = []
-    root = REPO / "lean" / "BrualdiLean" / "RealizationGraph"
+    root = MODULES
     for f in sorted(root.glob("*.lean")):
         if f.name == "HladikFink.lean":
             continue                     # parked in its own target, `sorry`-carrying by design
@@ -295,7 +316,7 @@ MODULE_SIZES = {
 def module_size_audit():
     """Declaration counts the manuscript quotes, checked against the modules."""
     problems = []
-    root = REPO / "lean" / "BrualdiLean" / "RealizationGraph"
+    root = MODULES
     for fname, claimed in MODULE_SIZES.items():
         src = (root / fname).read_text(errors="replace")
         actual = len(DECL_ANY.findall(src))
@@ -308,7 +329,7 @@ def module_size_audit():
 def doc_comment_audit():
     """Every prose claim in the module about `sorry` status, checked against the declarations."""
     problems = []
-    root = REPO / "lean" / "BrualdiLean" / "RealizationGraph"
+    root = MODULES
     for f in sorted(root.glob("*.lean")):
         src = f.read_text(errors="replace")
         for m in DECL.finditer(src):
@@ -450,12 +471,12 @@ def main():
     # a directory-wide maximum is a FALSE POSITIVE, and the first version of this check did exactly
     # that and failed on a clean tree.  (Found by running it, minutes after an adversary found the
     # opposite error in the version before.)
-    srcdir = REPO / "lean" / "BrualdiLean" / "RealizationGraph"
+    srcdir = MODULES
     newest_src = max((f.stat().st_mtime for f in srcdir.glob("*.lean")), default=0.0)
     bounds = {"RealizationGraph/SBPlusOrd": newest_src,
               "RealizationGraph/QStar": (srcdir / "QStar.lean").stat().st_mtime}
     for rel, bound in bounds.items():
-        art = REPO / "lean" / ".lake" / "build" / "lib" / "lean" / "BrualdiLean" / f"{rel}.olean"
+        art = OLEANS / f"{rel.split('/')[-1]}.olean"
         if not art.exists():
             # NOTE: in practice `run_generator` aborts first, since `lake env lean` does not build and
             # the generator imports these modules directly.  Kept as a belt-and-braces check, not as

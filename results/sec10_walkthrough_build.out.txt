@@ -1,0 +1,40 @@
+# pinned output of compute/sec10_walkthrough_build.py, run 2026-09-07
+
+d = (4, 2, 2, 2, 1, 1),  9 realizations
+Section 6 hands over an admissible pivot; admissible = [2, 3, 4, 6]
+  EXCEPTIONAL for this pair: [2]   degree class of 2: [2, 3, 4]
+  Section 8 dodges within the degree class to [3, 4] -- using v = 3
+quotient at v = 3: 5 vertices, 8 edges (NOT complete)
+  fibres [3, 3, 1, 1, 1] at neighbourhoods [[1, 2], [1, 4], [1, 5], [1, 6], [2, 4]]
+  non-bipartite fibres (buffer candidates): [0, 1]
+
+G_0 = 12 13 14 15 23 46   N(v) = A = [1, 2]
+G_1 = 12 13 14 15 24 36   N(v) = B = [1, 6]
+quotient Hamilton A-B path: [[1, 2], [2, 4], [1, 4], [1, 5], [1, 6]]
+buffer is q_2 = [1, 4], entered at x and y:
+  x = 12 13 14 15 26 34
+  y = 12 13 15 16 24 34
+buffer run: ['12 13 14 15 26 34', '12 13 14 16 25 34', '12 13 15 16 24 34']
+
+the concatenated path:
+  1. 12 13 14 15 23 46   [fibre 0]
+  2. 13 14 15 16 23 24   [fibre 0]
+  3. 12 13 14 16 23 45   [fibre 0]
+  4. 12 14 15 16 23 34   [fibre 4]
+  5. 12 13 14 15 26 34   [fibre 1]
+  6. 12 13 14 16 25 34   [fibre 1]
+  7. 12 13 15 16 24 34   [fibre 1]
+  8. 12 13 14 16 24 35   [fibre 2]
+  9. 12 13 14 15 24 36   [fibre 3]
+
+  [ok ] path has all 9 entries
+  [ok ] no realization repeats
+  [ok ] endpoints are the prescribed pair
+  [ok ] every consecutive pair is a 2-switch
+
+all three buffer positions, on this same instance:
+  start    : j=0 of m=4, left chain 0 fibres, right chain 4, x=G_0, y=interior  -> Hamilton path True
+  interior : j=2 of m=4, left chain 2 fibres, right chain 2, x=interior, y=interior  -> Hamilton path True
+  end      : j=4 of m=4, left chain 4 fibres, right chain 0, x=interior, y=G_1  -> Hamilton path True
+
+RESULT: PASS — Section 10.3's own test passes on the constructed list. Written to /home/jbaggett/combinatorics/topics/flipgraphs/realization/compute/data/sec10_walkthrough_build.json

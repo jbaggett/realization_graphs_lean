@@ -3,9 +3,9 @@ Copyright (c) 2026 Jeffrey S. Baggett. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jeffrey S. Baggett
 -/
-import BrualdiLean.RealizationGraph.IntervalLemma
-import BrualdiLean.RealizationGraph.InterfaceSaturation
-import BrualdiLean.RealizationGraph.SeparatorTheorem
+import Realization.IntervalLemma
+import Realization.InterfaceSaturation
+import Realization.SeparatorTheorem
 import Mathlib.Data.Fintype.Card
 
 /-!

@@ -25,9 +25,19 @@ whatever remains is a cited axiom or a certificate, and either one fails this ga
 import re, subprocess, sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parents[4]
-GEN  = REPO / "topics/flipgraphs/realization/compute/QStarNoteAxioms.lean"
-LEAN = REPO / "lean"
+# Two layouts, one file — see the same block in `check_axiom_baseline.py`.  In the companion
+# repository the modules are `Realization.*`, because the pinned `brualdi_lean` dependency owns the
+# `BrualdiLean.*` module namespace; assuming the working tree's layout unconditionally made this
+# gate measure nothing in a clone while still exiting 0.
+_HERE = Path(__file__).resolve().parent
+if (_HERE.parents[3] / "lean" / "BrualdiLean" / "RealizationGraph").is_dir():   # working tree
+    LEAN = _HERE.parents[3] / "lean"
+    GEN  = _HERE / "QStarNoteAxioms.lean"
+elif (_HERE.parent / "Realization").is_dir():                                   # companion repo
+    LEAN = _HERE.parent
+    GEN  = _HERE / "QStarNoteAxioms.lean"
+else:
+    raise SystemExit("REFUSING: the Lean modules are in neither layout this gate knows.")
 FOUNDATIONS = {"propext", "Classical.choice", "Quot.sound"}
 
 # one or more rows per numbered result of the note; the count is asserted, not inferred

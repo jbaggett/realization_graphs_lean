@@ -4,9 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jeffrey S. Baggett
 -/
 import BrualdiLean.Ledger
-import BrualdiLean.RealizationGraph.CrownBase
-import BrualdiLean.RealizationGraph.Defs
-import BrualdiLean.RealizationGraph.Prism
+import Realization.CrownBase
+import Realization.Defs
+import Realization.Prism
 import Mathlib.Combinatorics.SimpleGraph.Clique
 
 set_option autoImplicit false

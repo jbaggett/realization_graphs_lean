@@ -1,0 +1,18 @@
+# pinned output of compute/skeleton_test.py, run 2026-09-07
+
+  ... n=3 done (2 ideals)
+  ... n=4 done (11 ideals)
+  ... n=5 done (43 ideals)
+  ... n=6 done (172 ideals)
+
+=== is J(I) the skeleton of conv(I)? ===
+  Gale ideals with >=3 members            : 172
+  ★ Hamming-distance-2 pairs NOT edges    : 0   (expect 0)
+  ideals whose skeleton has EXTRA edges   : 88
+     ... of which are bad templates       : 15
+     ... NOT bad templates (fatal if >0)  : 73
+        n=5 k=2 extra=2 I=((1, 2), (1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5), (3, 4))
+        n=5 k=2 extra=2 I=((1, 2), (1, 3), (1, 4), (1, 5), (2, 3), (2, 4))
+        n=5 k=2 extra=3 I=((1, 2), (1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (3, 4))
+        n=5 k=3 extra=2 I=((1, 2, 3), (1, 2, 4), (1, 2, 5), (1, 3, 4), (1, 3, 5), (1, 4, 5), (2, 3, 4), (2, 3, 5))
+        n=5 k=3 extra=3 I=((1, 2, 3), (1, 2, 4), (1, 2, 5), (1, 3, 4), (1, 3, 5), (1, 4, 5), (2, 3, 4))

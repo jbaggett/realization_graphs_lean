@@ -1,0 +1,78 @@
+declarations traced : 115
+module-size audit   : clean
+doc-comment audit   : clean
+open-declaration audit: clean
+strata              : A=25 proved, B=90 proved, C=0 open   (NEVER summed)
+cited axioms        : 7
+  Brualdi.Ledger.flipGraph_connected
+      charged by Brualdi.RealizationGraph.SBPlusOrd.splitIncidence_buffer_of_tyshkevichIndecomposable
+      charged by Brualdi.RealizationGraph.SBPlusOrd.separator_buffer
+      charged by Brualdi.RealizationGraph.SBPlusOrd.sbPlus
+      charged by Brualdi.RealizationGraph.SBPlusOrd.mainLine_MH_of_IH
+      charged by Brualdi.RealizationGraph.SBPlusOrd.mainLine_maximally_hamiltonian
+      charged by Brualdi.RealizationGraph.SBPlusOrd.realizationGraph_maximally_hamiltonian
+      charged by Brualdi.RealizationGraph.SBPlusOrd.realizationGraph_homogeneously_traceable
+  Brualdi.Ledger.invariantFree_nonbip_has_triangle
+      charged by Brualdi.RealizationGraph.SBPlusOrd.splitIncidence_buffer_of_tyshkevichIndecomposable
+      charged by Brualdi.RealizationGraph.SBPlusOrd.separator_buffer
+      charged by Brualdi.RealizationGraph.SBPlusOrd.sbPlus
+      charged by Brualdi.RealizationGraph.SBPlusOrd.mainLine_MH_of_IH
+      charged by Brualdi.RealizationGraph.SBPlusOrd.mainLine_maximally_hamiltonian
+      charged by Brualdi.RealizationGraph.SBPlusOrd.realizationGraph_maximally_hamiltonian
+      charged by Brualdi.RealizationGraph.SBPlusOrd.realizationGraph_homogeneously_traceable
+  Brualdi.RealizationGraph.SBPlusOrd.erdos_gallai_sufficiency
+      charged by Brualdi.RealizationGraph.SBPlusOrd.atMostTwoExceptional
+      charged by Brualdi.RealizationGraph.SBPlusOrd.yFamilyPivot_same_degree
+      charged by Brualdi.RealizationGraph.SBPlusOrd.exceptionalPivot_symmDiff_eq_degreeClass
+      charged by Brualdi.RealizationGraph.SBPlusOrd.yFamilyPivot_degreeClass_card
+      charged by Brualdi.RealizationGraph.SBPlusOrd.yFamilyPivot_card_above
+      charged by Brualdi.RealizationGraph.SBPlusOrd.lemma_8_3e_one_sided_bound
+      charged by Brualdi.RealizationGraph.SBPlusOrd.lemma_8_3f_complementation
+      charged by Brualdi.RealizationGraph.SBPlusOrd.theorem_8_3_middle_degrees
+      charged by Brualdi.RealizationGraph.SBPlusOrd.exists_neg_slack_of_not_graphical
+      charged by Brualdi.RealizationGraph.SBPlusOrd.sbPlus
+      charged by Brualdi.RealizationGraph.SBPlusOrd.mainLine_MH_of_IH
+      charged by Brualdi.RealizationGraph.SBPlusOrd.mainLine_maximally_hamiltonian
+      charged by Brualdi.RealizationGraph.SBPlusOrd.realizationGraph_maximally_hamiltonian
+      charged by Brualdi.RealizationGraph.SBPlusOrd.realizationGraph_homogeneously_traceable
+  Brualdi.RealizationGraph.SBPlusOrd.invariantPosition_forces_block
+      charged by Brualdi.RealizationGraph.SBPlusOrd.cellVaries_of_tyshkevichIndecomposable
+      charged by Brualdi.RealizationGraph.SBPlusOrd.splitIncidence_buffer_of_tyshkevichIndecomposable
+      charged by Brualdi.RealizationGraph.SBPlusOrd.separator_buffer
+      charged by Brualdi.RealizationGraph.SBPlusOrd.sbPlus
+      charged by Brualdi.RealizationGraph.SBPlusOrd.mainLine_MH_of_IH
+      charged by Brualdi.RealizationGraph.SBPlusOrd.mainLine_maximally_hamiltonian
+      charged by Brualdi.RealizationGraph.SBPlusOrd.realizationGraph_maximally_hamiltonian
+      charged by Brualdi.RealizationGraph.SBPlusOrd.realizationGraph_homogeneously_traceable
+  Brualdi.RealizationGraph.barrus_theorem9_bipartite_classification
+      charged by Brualdi.RealizationGraph.theorem_one
+      charged by Brualdi.RealizationGraph.corollary_3_3
+      charged by Brualdi.RealizationGraph.factorReady_of_realizationGraph
+      charged by Brualdi.RealizationGraph.SBPlusOrd.isMH_of_tyshkevichDecomposable_of_IH
+      charged by Brualdi.RealizationGraph.SBPlusOrd.mainLine_maximally_hamiltonian
+      charged by Brualdi.RealizationGraph.SBPlusOrd.realizationGraph_maximally_hamiltonian
+      charged by Brualdi.RealizationGraph.SBPlusOrd.realizationGraph_homogeneously_traceable
+  Brualdi.RealizationGraph.barrus_theorem9_bipartite_iff_triangleFree
+      charged by Brualdi.RealizationGraph.theorem_one
+      charged by Brualdi.RealizationGraph.SBPlusOrd.hasNonBipartiteFibre_of_fibreNonbip
+      charged by Brualdi.RealizationGraph.SBPlusOrd.hasNonBipartiteFibre_of_patternFibreNonbip
+      charged by Brualdi.RealizationGraph.SBPlusOrd.hasNonBipartiteFibre_of_lineFibreNonbip
+      charged by Brualdi.RealizationGraph.SBPlusOrd.splitIncidence_buffer_of_tyshkevichIndecomposable
+      charged by Brualdi.RealizationGraph.SBPlusOrd.separator_buffer
+      charged by Brualdi.RealizationGraph.SBPlusOrd.sbPlus
+      charged by Brualdi.RealizationGraph.SBPlusOrd.mainLine_MH_of_IH
+      charged by Brualdi.RealizationGraph.SBPlusOrd.mainLine_maximally_hamiltonian
+      charged by Brualdi.RealizationGraph.SBPlusOrd.realizationGraph_maximally_hamiltonian
+      charged by Brualdi.RealizationGraph.SBPlusOrd.realizationGraph_homogeneously_traceable
+  Brualdi.RealizationGraph.realizationGraph_preconnected
+      charged by Brualdi.RealizationGraph.L1
+      charged by Brualdi.RealizationGraph.theorem_5_7_cross_degree
+      charged by Brualdi.RealizationGraph.theorem_5_8_exact_color_expansion
+      charged by Brualdi.RealizationGraph.SBPlusOrd.ord
+      charged by Brualdi.RealizationGraph.SBPlusOrd.obi
+      charged by Brualdi.RealizationGraph.SBPlusOrd.mainLine_MH_of_IH
+      charged by Brualdi.RealizationGraph.SBPlusOrd.mainLine_maximally_hamiltonian
+      charged by Brualdi.RealizationGraph.SBPlusOrd.realizationGraph_maximally_hamiltonian
+      charged by Brualdi.RealizationGraph.SBPlusOrd.realizationGraph_homogeneously_traceable
+
+RESULT: PASS — the surface is what the generator says it is.

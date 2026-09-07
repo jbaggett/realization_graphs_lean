@@ -1,0 +1,15 @@
+# pinned output of compute/sec11_matroid_pivot_census.py, run 2026-09-07
+
+  order  1:      1 graphical sequences, 0 with NO matroid pivot
+  order  2:      2 graphical sequences, 0 with NO matroid pivot
+  order  3:      4 graphical sequences, 0 with NO matroid pivot
+  order  4:     11 graphical sequences, 0 with NO matroid pivot
+  order  5:     31 graphical sequences, 0 with NO matroid pivot
+  order  6:    102 graphical sequences, 0 with NO matroid pivot
+  order  7:    342 graphical sequences, 0 with NO matroid pivot
+  order  8:   1213 graphical sequences, 0 with NO matroid pivot
+  order  9:   4361 graphical sequences, 0 with NO matroid pivot
+  order 10:  16016 graphical sequences, 0 with NO matroid pivot
+  order 11:  59348 graphical sequences, 6 with NO matroid pivot
+
+RESULT: PASS -- none through ground order ten, exactly 6 at order eleven, and they are the six the paper prints. Written to /home/jbaggett/combinatorics/topics/flipgraphs/realization/compute/data/sec11_matroid_pivot_census.json

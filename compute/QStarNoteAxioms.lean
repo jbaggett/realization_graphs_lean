@@ -50,7 +50,7 @@ An earlier version of this paragraph asserted that the note "discloses" the Lemm
 not; the note says nothing of the kind.  A comment that reports what another document says is a claim
 like any other, and that one was false.
 -/
-import BrualdiLean.RealizationGraph.QStar
+import Realization.QStar
 
 #print axioms Brualdi.RealizationGraph.QStar.galeLE_iff_pointwise
 -- FAITHFULNESS BRIDGES, added 2026-08-22.  A cold reader pointed out that Theorem 7.6 asserts a

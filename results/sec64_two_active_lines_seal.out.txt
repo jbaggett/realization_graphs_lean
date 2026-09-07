@@ -1,0 +1,5 @@
+# pinned output of compute/sec64_two_active_lines_seal.py, run 2026-09-07
+
+instances checked per claim: {'C0': 215291, 'C1': 15, 'C2': 70, 'C3': 2, 'C4': 1, 'CJ': 66, 'WIDE': 66}
+
+RESULT: PASS — every claim of Section 6.4's two-active-lines branch holds on the swept range.

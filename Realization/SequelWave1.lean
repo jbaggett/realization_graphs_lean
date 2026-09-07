@@ -3,8 +3,8 @@ Copyright (c) 2026 Jeffrey S. Baggett. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jeffrey S. Baggett
 -/
-import BrualdiLean.RealizationGraph.DodgeCore
-import BrualdiLean.RealizationGraph.PathCriterion
+import Realization.DodgeCore
+import Realization.PathCriterion
 
 /-!
 # Sequel wave 1: exchange ports and honest open statements

@@ -1,0 +1,24 @@
+# pinned output of compute/sec63_witnesses.py, run 2026-09-07
+
+excluded cell                    d                          |V(G(d))|  triangle support missing
+----------------------------------------------------------------------------------------------------
+A-A joined by an edge            (1, 1, 1, 1, 1, 1)                15  support [2, 3, 4, 5] misses [0, 1]   (42 such)
+B-B not joined                   (3, 3, 3, 3, 4, 4)                31  support [0, 1, 3, 4, 5] misses [2]   (252 such)
+A-Z_0 joined by an edge          (1, 2, 2, 2, 1, 4)                 9  support [0, 1, 2, 4, 5] misses [3]   (42 such)
+B-Z_0 not joined                 (2, 3, 3, 3, 4, 3)                36  support [0, 1, 2, 4] misses [3]   (330 such)
+Z_0-Z_0, joined                  (1, 3, 3, 3, 4, 4)                 9  support [0, 1, 2, 4, 5] misses [3]   (24 such)
+Z_0-Z_0, not joined              (1, 3, 3, 3, 3, 3)                30  support [1, 2, 3, 4, 5] misses [0]   (363 such)
+Z_0-Z_1, joined                  (2, 2, 3, 3, 4, 4)                17  support [0, 1, 4, 5] misses [2, 3]   (99 such)
+Z_0-Z_1, not joined              (2, 2, 3, 3, 3, 3)                54  support [1, 2, 3, 4, 5] misses [0]   (576 such)
+
+The Z_0-Z_1 row, each status separately, with an explicit triangle for each:
+  Z_0-Z_1, joined (uw an EDGE)   type II (one removed, one added)      misses [2] of D
+      x=1 y=0 z=4 t=5 t'=3
+      01 04 15 23 24 25 34 35 45
+      04 05 14 15 23 24 25 34 35
+      03 04 14 15 23 24 25 35 45
+  Z_0-Z_1, not joined            type II (one removed, one added)      misses [0] of D
+      x=3 y=1 z=2 t=5 t'=4
+      01 02 13 24 25 34 35 45
+      01 02 15 23 24 34 35 45
+      01 02 14 23 25 34 35 45

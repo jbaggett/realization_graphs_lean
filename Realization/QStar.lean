@@ -53,7 +53,7 @@ The final genuine obligation, **`crossingLemma`**, was discharged on 2026-08-16 
 regimes and complement-and-reverse duality below.  This module now has no open proof obligations.
 -/
 import BrualdiLean.ColemanDefs
-import BrualdiLean.RealizationGraph.Splice
+import Realization.Splice
 import Mathlib.Combinatorics.Colex
 import Mathlib.Combinatorics.SimpleGraph.Bipartite
 
@@ -2839,7 +2839,7 @@ The equivalence `Y ∉ S^e ⟺ Y ≠ A ∧ ¬ IsCliqueSum (layerAbove F e) A Y`:
 with `A` dominating, `IsCliqueSum .. A Y` holds exactly when `Y` is the other dominating vertex,
 i.e. `Y = Y_f`; otherwise it is false for every `Y`, matching `S^e = {A}`. The singleton layer is
 the `card = 1` disjunct. This graph-theoretic reading of the barred sets is the one the manuscript
-endorses (§7.9, "the condition on `L` may equally be read on `J(F¹)`"), and it is what both
+endorses (§7.8.1, "the condition on `L` may equally be read on `J(F¹)`"), and it is what both
 computational seals of Theorem 7.11 actually computed — the lane's 409,416 + 40 and the decoupled
 427,156, each with 0 violations.
 
@@ -4344,13 +4344,13 @@ theorem yFamily_isShifted {G : Finset α} (hG : ∀ e ∈ G, ∀ x : α, x < e �
 
 /-! ### Lemma 7.10's arm exchange
 
-The duality of Section 7.8 carries a yFamily to a yFamily "with the two arms exchanged". Until
+The duality of Section 7.7 carries a yFamily to a yFamily "with the two arms exchanged". Until
 2026-08-24 the tree held only the containment identity that clause is proved FROM —
 `innerArm_dual_iff_outerArm` and its converse — and **nothing related `yInnerArm` or `yOuterArm` to
 the duality at all**, which a blind reading of the Lean found
 (`results/2026-08-24_blind_back_translation.md`). These four lemmas state the clause itself.
 
-The ground is `Fin n` taken whole, which is where Section 7.8's reversal lives, and the hypothesis
+The ground is `Fin n` taken whole, which is where Section 7.7's reversal lives, and the hypothesis
 `k + 2 ≤ n` is the one `yFamily_isShifted` already carries as `hGcard`. It is not decoration: with
 truncated subtraction the statement is **false** for `k > n`, since the dual rank `n - k` collapses
 to zero while the inner arm does not. -/
@@ -7124,92 +7124,12 @@ private theorem not_crossingFailure_of_rank_succ_eq_pred
     · rintro ⟨hxe, rfl | hxI⟩
       · exact Or.inl rfl
       · exact Or.inr ⟨hxe, hxI⟩
-  have hL₀sub : L₀ ⊆ crossingBarred L₀ B ∪ {Zc} := by
-    intro Z hZ
-    by_cases hZbar : Z ∈ crossingBarred L₀ B
-    · exact Finset.mem_union_left _ hZbar
-    · apply Finset.mem_union_right
-      simpa [lower_unique Z hZ hZbar]
-  have hL₀cardLe : L₀.card ≤ 3 := by
-    calc
-      L₀.card ≤ (crossingBarred L₀ B ∪ {Zc}).card := Finset.card_le_card hL₀sub
-      _ ≤ (crossingBarred L₀ B).card + ({Zc} : Finset (Finset α)).card :=
-        Finset.card_union_le _ _
-      _ ≤ 3 := by
-        have hle := crossingBarred_card_le_two hB
-        change (crossingBarred L₀ B).card ≤ 2 at hle
-        simp only [Finset.card_singleton]
-        omega
-  have hbar₀one : (crossingBarred L₀ B).card = 1 := by
-    rcases crossingBarred_card_eq_one_or_two hB with hOne | hTwo
-    · exact hOne
-    · have hfour := crossingBarred_two_forces_four hB hTwo
-      change 4 ≤ L₀.card at hfour
-      omega
-  have hbar₀ : crossingBarred L₀ B = {B} :=
-    crossingBarred_eq_singleton_of_card_one hB hbar₀one
   have hZcMem : Zc ∈ L₀ := by
     rw [← lower_unique Z₀ hZ₀ hZ₀out]
     exact hZ₀
   have hZcOut : Zc ∉ crossingBarred L₀ B := by
     rw [← lower_unique Z₀ hZ₀ hZ₀out]
     exact hZ₀out
-  have hZcB : Zc ≠ B := by
-    intro h
-    apply hZcOut
-    rw [hbar₀, h]
-    simp
-  have hL₀eq : L₀ = {B, Zc} := by
-    apply Finset.Subset.antisymm
-    · intro Z hZ
-      by_cases hZbar : Z ∈ crossingBarred L₀ B
-      · rw [hbar₀] at hZbar
-        have : Z = B := by simpa using hZbar
-        simp [this]
-      · have := lower_unique Z hZ hZbar
-        simp [this]
-    · intro Z hZ
-      rcases Finset.mem_insert.mp hZ with h | h
-      · exact h ▸ hB
-      · have : Z = Zc := by simpa using h
-        exact this ▸ hZcMem
-  have hL₀card : L₀.card = 2 := by rw [hL₀eq]; simp [hZcB.symm]
-  have hP₀two : 2 ≤ (puncturedLower F e).card := by
-    rw [puncturedLower_card_eq_layerBelow_card]
-    change 2 ≤ L₀.card
-    omega
-  have hP₀shift : IsShifted (puncturedLower F e) k :=
-    isShifted_puncturedLower hF ⟨B, hB⟩
-  obtain ⟨m₁, m₂, hm₁, hm₂, _i, _j, _him₁, _him₂, _hjm₂, _hjm₁,
-      _hij, _hm₂repr, _himax, _hjmin⟩ :=
-    exists_gale_bottom_pair_with_boundary hP₀shift hP₀two
-  have heK : e ∈ initialSegment G k := initialSegment_mono G (by omega) heTop
-  have hm₁coord := layerBelow_m1_of_mem_initial hF ⟨B, hB⟩
-    (show k + 1 ≤ (usedGround F).card by change k + 1 ≤ G.card; omega) heK hm₁
-  change liftPuncturedSet m₁ = Zc at hm₁coord
-  have hm₂coord := layerBelow_m2_of_mem_initial hF ⟨B, hB⟩ hP₀two (by omega)
-    (show k + 2 ≤ (usedGround F).card by change k + 2 ≤ G.card; omega)
-    heK hm₁ hm₂
-  have hm₂below : liftPuncturedSet m₂ ∈ L₀ := by
-    change liftPuncturedSet m₂ ∈ layerBelow F e
-    exact Finset.mem_filter.mpr
-      ⟨mem_puncturedLower_iff.mp hm₂.1, by simp [liftPuncturedSet]⟩
-  have hm₂neZc : liftPuncturedSet m₂ ≠ Zc := by
-    intro hEq
-    apply hm₂.2.1
-    have := congrArg (punctureSet e) (hEq.trans hm₁coord.symm)
-    simpa using this
-  have hm₂eqB : liftPuncturedSet m₂ = B := by
-    rw [hL₀eq] at hm₂below
-    rcases Finset.mem_insert.mp hm₂below with h | h
-    · exact h
-    · have : liftPuncturedSet m₂ = Zc := by simpa using h
-      exact (hm₂neZc this).elim
-  have hBcoord :
-      B = (initialSegment G k).erase e ∪ groundPosition G (k + 2) := by
-    change liftPuncturedSet m₂ =
-      (initialSegment G k).erase e ∪ groundPosition G (k + 2) at hm₂coord
-    exact hm₂eqB.symm.trans hm₂coord
   let W := (initialSegment G (k + 1)).erase s.val
   have hWambient : W ∈ linkInnerArmAmbient G k s.val := by
     rw [linkInnerArmAmbient]
@@ -7258,9 +7178,8 @@ private theorem not_crossingFailure_of_rank_succ_eq_pred
       simp [hse.ne, hsK1]
     · simp [hxs]
   have htargetBar := crossingFailure_down_target_mem_crossingBarred hF hfail hW hWout hse hsW
-  rw [htarget, hbar₀] at htargetBar
-  have hEq : Zc = B := by simpa using htargetBar
-  exact hZcB hEq
+  rw [htarget] at htargetBar
+  exact hZcOut htargetBar
 
 /-! ### 8.3 The regime `e = k`: configurations (b) and (c) -/
 
@@ -7425,14 +7344,12 @@ private theorem not_crossingFailure_at_k_of_left_two
   let M₁ := initialSegment G k
   let M₂ := initialSegment G (k + 1) \ groundPosition G (k - 1)
   let N₁ := (initialSegment G (k + 1)).erase e
-  let N₂ := (initialSegment G k).erase e ∪ groundPosition G (k + 2)
   have heA : e ∈ A := (Finset.mem_filter.mp hA).2
   have heG : e ∈ G :=
     mem_usedGround_of_mem_family (Finset.mem_filter.mp hA).1 heA
   have heRank : groundRank G e = k - 1 := by
     change groundRank (usedGround F) e = k - 1
     omega
-  have hk : 1 ≤ k := by omega
   have heTop : e ∈ initialSegment G k :=
     mem_initialSegment_of_groundRank_lt heG (by omega)
   have hePrev : e ∉ initialSegment G (k - 1) := by
@@ -7502,49 +7419,66 @@ private theorem not_crossingFailure_at_k_of_left_two
     rw [hrow₁]
     rcases hT with hT | hT
     · obtain ⟨U, hU, rfl⟩ := Finset.mem_image.mp hT
-      apply Finset.mem_image.mpr
-      refine ⟨U, ?_, rfl⟩
-      rw [yFamily]
-      exact Finset.mem_union_left _ (Finset.mem_union_right _ hU)
+      exact Finset.mem_image.mpr ⟨U, by simp [yFamily, hU], rfl⟩
     · obtain ⟨U, hU, rfl⟩ := Finset.mem_image.mp hT
-      apply Finset.mem_image.mpr
-      refine ⟨U, ?_, rfl⟩
-      rw [yFamily]
-      exact Finset.mem_union_right _ hU
-  let Wq := (initialSegment G (k + 1)).erase s₁.val
-  have hWqAmbient : Wq ∈ linkInnerArmAmbient G k s₁.val := by
-    rw [linkInnerArmAmbient]
-    exact Finset.mem_image.mpr
-      ⟨s₁.val, Finset.mem_filter.mpr ⟨hs₁G, le_rfl⟩, rfl⟩
+      exact Finset.mem_image.mpr ⟨U, by simp [yFamily, hU], rfl⟩
+  let ii : Fin G.card := ⟨k - 3, by omega⟩
+  let i := G.orderEmbOfFin rfl ii
+  have hiG : i ∈ G := Finset.orderEmbOfFin_mem G rfl ii
+  have hiRank : groundRank G i = k - 3 := by
+    simpa [i, ii] using groundRank_orderEmbOfFin G ii
+  have hiTop : i ∈ initialSegment G (k - 2) :=
+    mem_initialSegment_of_groundRank_lt hiG (by omega)
+  have hs₁i : s₁.val ≤ i := by
+    apply le_of_not_gt
+    intro his
+    have hrank := groundRank_lt_groundRank_of_lt hiG
+      (initialSegment_subset G (k - 2) hs₁G) his
+    have hsRank := (Finset.mem_filter.mp hs₁G).2
+    omega
+  let Wq := (initialSegment G (k + 1)).erase i
   have hWqImage : Wq ∈
       (yInnerArm (G.erase e) (k - 1) s₁.val).image (fun X => insert e X) := by
-    rw [hInner₁]
-    exact hWqAmbient
+    rw [hInner₁, linkInnerArmAmbient]
+    exact Finset.mem_image.mpr ⟨i, Finset.mem_filter.mpr ⟨hiTop, hs₁i⟩, rfl⟩
   have hWq : Wq ∈ L₁ := arm_mem Wq (Or.inr hWqImage)
-  let Wp := insert e (insert r₁.val (initialSegment G (k - 2)))
-  have hWpAmbient : Wp ∈ linkOuterArmAmbient G k e r₁.val := by
-    rw [linkOuterArmAmbient]
-    exact Finset.mem_image.mpr
-      ⟨r₁.val, Finset.mem_filter.mpr ⟨hr₁G, hr₁Out, le_rfl⟩, rfl⟩
+  let iq₁ : Fin G.card := ⟨k + 1, by omega⟩
+  let q₁ := G.orderEmbOfFin rfl iq₁
+  have hq₁G : q₁ ∈ G := Finset.orderEmbOfFin_mem G rfl iq₁
+  have hq₁Rank : groundRank G q₁ = k + 1 := by
+    simpa [q₁, iq₁] using groundRank_orderEmbOfFin G iq₁
+  have hq₁Out : q₁ ∉ initialSegment G (k + 1) := by
+    intro h
+    have := (Finset.mem_filter.mp h).2
+    omega
+  have hq₁r₁ : q₁ ≤ r₁.val := by
+    apply le_of_not_gt
+    intro hrq
+    have hrank := groundRank_lt_groundRank_of_lt hr₁G hq₁G hrq
+    have hrLower : k + 1 ≤ groundRank G r₁.val := by
+      exact le_of_not_gt (fun h => hr₁Out (Finset.mem_filter.mpr ⟨hr₁G, h⟩))
+    omega
+  let Wp := insert e (insert q₁ (initialSegment G (k - 2)))
   have hWpImage : Wp ∈
       (yOuterArm (G.erase e) (k - 1) r₁.val).image (fun X => insert e X) := by
-    rw [hOuter₁]
-    exact hWpAmbient
+    rw [hOuter₁, linkOuterArmAmbient]
+    exact Finset.mem_image.mpr
+      ⟨q₁, Finset.mem_filter.mpr ⟨hq₁G, hq₁Out, hq₁r₁⟩, rfl⟩
   have hWp : Wp ∈ L₁ := arm_mem Wp (Or.inl hWpImage)
   have hM₁sub : M₁ ⊆ initialSegment G (k + 1) := initialSegment_mono G (by omega)
   have hM₂sub : M₂ ⊆ initialSegment G (k + 1) := Finset.sdiff_subset
-  have hrWp : r₁.val ∈ Wp := by simp [Wp]
-  have hWpM₁ : Wp ≠ M₁ := by intro h; exact hr₁Out (hM₁sub (h ▸ hrWp))
-  have hWpM₂ : Wp ≠ M₂ := by intro h; exact hr₁Out (hM₂sub (h ▸ hrWp))
-  have hs₁M₁ : s₁.val ∈ M₁ := initialSegment_mono G (by omega) hs₁G
-  have hs₁NotPos : s₁.val ∉ groundPosition G (k - 1) := by
+  have hq₁Wp : q₁ ∈ Wp := by simp [Wp]
+  have hWpM₁ : Wp ≠ M₁ := by intro h; exact hq₁Out (hM₁sub (h ▸ hq₁Wp))
+  have hWpM₂ : Wp ≠ M₂ := by intro h; exact hq₁Out (hM₂sub (h ▸ hq₁Wp))
+  have hiM₁ : i ∈ M₁ := initialSegment_mono G (by omega) hiTop
+  have hiNotPos : i ∉ groundPosition G (k - 1) := by
     intro h
-    exact (Finset.mem_sdiff.mp h).2 (initialSegment_mono G (by omega) hs₁G)
-  have hs₁M₂ : s₁.val ∈ M₂ :=
-    Finset.mem_sdiff.mpr ⟨initialSegment_mono G (by omega) hs₁G, hs₁NotPos⟩
-  have hs₁Wq : s₁.val ∉ Wq := Finset.notMem_erase _ _
-  have hWqM₁ : Wq ≠ M₁ := by intro h; exact hs₁Wq (h ▸ hs₁M₁)
-  have hWqM₂ : Wq ≠ M₂ := by intro h; exact hs₁Wq (h ▸ hs₁M₂)
+    exact (Finset.mem_sdiff.mp h).2 (initialSegment_mono G (by omega) hiTop)
+  have hiM₂ : i ∈ M₂ :=
+    Finset.mem_sdiff.mpr ⟨initialSegment_mono G (by omega) hiTop, hiNotPos⟩
+  have hiWq : i ∉ Wq := Finset.notMem_erase _ _
+  have hWqM₁ : Wq ≠ M₁ := by intro h; exact hiWq (h ▸ hiM₁)
+  have hWqM₂ : Wq ≠ M₂ := by intro h; exact hiWq (h ▸ hiM₂)
   have hWpOut : Wp ∉ crossingBarred L₁ A := by rw [hbar₁]; simp [hWpM₁, hWpM₂]
   have hWqOut : Wq ∉ crossingBarred L₁ A := by rw [hbar₁]; simp [hWqM₁, hWqM₂]
   let it : Fin G.card := ⟨k - 2, by omega⟩
@@ -7559,179 +7493,153 @@ private theorem not_crossingFailure_at_k_of_left_two
     intro h
     have := (Finset.mem_filter.mp h).2
     omega
-  have htr : t ≠ r₁.val := by
+  have htq₁ : t ≠ q₁ := by
     intro h
-    exact hr₁Out (h ▸ initialSegment_mono G (by omega) htTop)
-  have htWp : t ∉ Wp := by simp [Wp, hte.ne, htr, htCore]
-  have hs₁e : s₁.val < e := by
-    apply lt_of_groundRank_lt_groundRank
-      (initialSegment_subset G (k - 2) hs₁G) heG
-    have := (Finset.mem_filter.mp hs₁G).2
+    have hr := congrArg (groundRank G) h
     omega
-  have hs₁K1 : s₁.val ∈ initialSegment G (k + 1) :=
-    initialSegment_mono G (by omega) hs₁G
-  have hTq : insert s₁.val (Wq.erase e) = N₁ := by
-    change insert s₁.val (((initialSegment G (k + 1)).erase s₁.val).erase e) =
+  have htWp : t ∉ Wp := by simp [Wp, hte.ne, htq₁, htCore]
+  have hie : i < e := lt_of_groundRank_lt_groundRank hiG heG (by omega)
+  have hiK1 : i ∈ initialSegment G (k + 1) :=
+    initialSegment_mono G (by omega) hiTop
+  have hTq : insert i (Wq.erase e) = N₁ := by
+    change insert i (((initialSegment G (k + 1)).erase i).erase e) =
       (initialSegment G (k + 1)).erase e
     ext x
-    by_cases hxs : x = s₁.val
+    by_cases hxi : x = i
     · subst x
-      simp [hs₁e.ne, hs₁K1]
-    · simp [hxs]
+      simp [hie.ne, hiK1]
+    · simp [hxi]
   have hInsertT : insert t (initialSegment G (k - 2)) = initialSegment G (k - 1) := by
     have harith : k - 2 + 1 = k - 1 := by omega
     simpa [harith] using initialSegment_insert_eq_succ_of_top
       (G := G) (e := t) (j := k - 2) (by omega) (by simpa [harith] using htTop) htCore
-  let Tp := insert r₁.val (initialSegment G (k - 1))
+  have heCore : e ∉ initialSegment G (k - 2) := by
+    intro h
+    exact hePrev (initialSegment_mono G (by omega) h)
+  have heq₁ : e ≠ q₁ := by
+    intro h
+    have hr := congrArg (groundRank G) h
+    omega
+  let Tp := insert q₁ (initialSegment G (k - 1))
   have hTp : insert t (Wp.erase e) = Tp := by
-    have heCore : e ∉ initialSegment G (k - 2) := by
-      intro h
-      exact hePrev (initialSegment_mono G (by omega) h)
-    have her : e ≠ r₁.val := r₁.property.symm
-    have heInner : e ∉ insert r₁.val (initialSegment G (k - 2)) := by
-      simp [her, heCore]
-    change insert t ((insert e (insert r₁.val (initialSegment G (k - 2)))).erase e) =
-      insert r₁.val (initialSegment G (k - 1))
-    rw [Finset.erase_insert heInner, Finset.insert_comm t r₁.val, hInsertT]
-  have hTqBar := crossingFailure_down_target_mem_crossingBarred hF hfail hWq hWqOut hs₁e hs₁Wq
+    have heInner : e ∉ insert q₁ (initialSegment G (k - 2)) := by
+      simp [heq₁, heCore]
+    change insert t ((insert e (insert q₁ (initialSegment G (k - 2)))).erase e) =
+      insert q₁ (initialSegment G (k - 1))
+    rw [Finset.erase_insert heInner, Finset.insert_comm t q₁, hInsertT]
+  have hTqBar := crossingFailure_down_target_mem_crossingBarred hF hfail hWq hWqOut hie hiWq
   have hTpBar := crossingFailure_down_target_mem_crossingBarred hF hfail hWp hWpOut hte htWp
   rw [hTq] at hTqBar
   rw [hTp] at hTpBar
-  have hrTp : r₁.val ∈ Tp := Finset.mem_insert_self _ _
-  have hrN₁ : r₁.val ∉ N₁ := by
+  have hq₁Tp : q₁ ∈ Tp := Finset.mem_insert_self _ _
+  have hq₁N₁ : q₁ ∉ N₁ := by
     intro h
-    exact hr₁Out (initialSegment_mono G (by omega) (Finset.mem_of_mem_erase h))
-  have hTpN₁ : Tp ≠ N₁ := by intro h; exact hrN₁ (h ▸ hrTp)
+    exact hq₁Out (Finset.mem_of_mem_erase h)
+  have hTpN₁ : Tp ≠ N₁ := by intro h; exact hq₁N₁ (h ▸ hq₁Tp)
+  have htargets : ({Tp, N₁} : Finset (Finset α)) ⊆ crossingBarred L₀ B := by
+    intro X hX
+    rcases Finset.mem_insert.mp hX with h | h
+    · exact h ▸ hTpBar
+    · have : X = N₁ := by simpa using h
+      exact this ▸ hTqBar
   have hbar₀ge : 2 ≤ (crossingBarred L₀ B).card := by
-    have hsub : ({Tp, N₁} : Finset (Finset α)) ⊆ crossingBarred L₀ B := by
-      intro X hX
-      rcases Finset.mem_insert.mp hX with h | h
-      · exact h ▸ hTpBar
-      · have : X = N₁ := by simpa using h
-        exact this ▸ hTqBar
-    have := Finset.card_le_card hsub
+    have := Finset.card_le_card htargets
     simpa [hTpN₁] using this
   have hbar₀two : (crossingBarred L₀ B).card = 2 := by
     have hle := crossingBarred_card_le_two hB
     change (crossingBarred L₀ B).card ≤ 2 at hle
     omega
+  have hbar₀ : crossingBarred L₀ B = {Tp, N₁} := by
+    symm
+    apply Finset.eq_of_subset_of_card_le htargets
+    rw [hbar₀two]
+    simp [hTpN₁]
   obtain ⟨Y₀, hY₀, hbadRaw₀⟩ :=
     exists_cliqueSum_of_crossingBarred_card_two hB hbar₀two
-  have hbarRaw₀ : crossingBarred L₀ B = {B, Y₀} := crossingBarred_eq_pair_of_cliqueSum hbadRaw₀
   have hbadP₀ := raw_lower_cliqueSum_to_punctured hbadRaw₀
   obtain ⟨r₀, s₀, hr₀G, hr₀Out, hs₀G, hrow₀⟩ :=
     layerBelow_yFamily_arms_at_k hF ⟨B, hB⟩ heTop hePrev hbadP₀
-  change r₀.val ∈ G at hr₀G
-  change r₀.val ∉ initialSegment G (k + 2) at hr₀Out
   change s₀.val ∈ initialSegment G (k - 1) at hs₀G
   change L₀ =
     ({(initialSegment G (k + 1)).erase e,
         (initialSegment G k).erase e ∪ groundPosition G (k + 2)} ∪
       lowerOuterArmAtK G k r₀.val) ∪ lowerInnerArmAtK G k e s₀.val at hrow₀
-  have hGcard3 : k + 3 ≤ G.card := by
-    have hrRank : k + 2 ≤ groundRank G r₀.val := by
-      exact le_of_not_gt (fun h => hr₀Out (Finset.mem_filter.mpr ⟨hr₀G, h⟩))
-    have := groundRank_lt_card_of_mem hr₀G
+  have hs₀t : s₀.val ≤ t := by
+    apply le_of_not_gt
+    intro hts
+    have hrank := groundRank_lt_groundRank_of_lt htG
+      (initialSegment_subset G (k - 1) hs₀G) hts
+    have hsRank := (Finset.mem_filter.mp hs₀G).2
     omega
-  have hP₀two : 2 ≤ (puncturedLower F e).card := by
-    rw [puncturedLower_card_eq_layerBelow_card]
-    exact hBelow
-  have hpairCoord₀ :
-      (B = N₁ ∧ Y₀ = N₂) ∨ (Y₀ = N₁ ∧ B = N₂) := by
-    rcases lemma2_universalPair_is_galeLeast
-        (isShifted_puncturedLower hF ⟨B, hB⟩) hbadP₀ with hBY | hYB
-    · left
-      rcases hBY with ⟨hLeast, hSecond⟩
-      have hBcoord := layerBelow_m1_of_mem_initial hF ⟨B, hB⟩
-        (show k + 1 ≤ (usedGround F).card by change k + 1 ≤ G.card; omega)
-        heTop hLeast
-      have hYcoord := layerBelow_m2_of_mem_initial hF ⟨B, hB⟩ hP₀two hk
-        (show k + 2 ≤ (usedGround F).card by change k + 2 ≤ G.card; omega)
-        heTop hLeast hSecond
-      change liftPuncturedSet (punctureSet e B) = N₁ at hBcoord
-      change liftPuncturedSet (punctureSet e Y₀) = N₂ at hYcoord
-      exact ⟨(lift_lower_puncture hB).symm.trans hBcoord,
-        (lift_lower_puncture hY₀).symm.trans hYcoord⟩
-    · right
-      rcases hYB with ⟨hLeast, hSecond⟩
-      have hYcoord := layerBelow_m1_of_mem_initial hF ⟨B, hB⟩
-        (show k + 1 ≤ (usedGround F).card by change k + 1 ≤ G.card; omega)
-        heTop hLeast
-      have hBcoord := layerBelow_m2_of_mem_initial hF ⟨B, hB⟩ hP₀two hk
-        (show k + 2 ≤ (usedGround F).card by change k + 2 ≤ G.card; omega)
-        heTop hLeast hSecond
-      change liftPuncturedSet (punctureSet e Y₀) = N₁ at hYcoord
-      change liftPuncturedSet (punctureSet e B) = N₂ at hBcoord
-      exact ⟨(lift_lower_puncture hY₀).symm.trans hYcoord,
-        (lift_lower_puncture hB).symm.trans hBcoord⟩
-  have hbar₀ : crossingBarred L₀ B = {N₁, N₂} := by
-    rw [hbarRaw₀]
-    rcases hpairCoord₀ with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;> simp [Finset.pair_comm]
-  let Z := ((initialSegment G (k + 2)).erase e).erase s₀.val
+  let Z := ((initialSegment G (k + 2)).erase e).erase t
   have hZinner : Z ∈ lowerInnerArmAtK G k e s₀.val := by
     rw [lowerInnerArmAtK]
     exact Finset.mem_image.mpr
-      ⟨s₀.val, Finset.mem_filter.mpr ⟨hs₀G, le_rfl⟩, rfl⟩
+      ⟨t, Finset.mem_filter.mpr ⟨htTop, hs₀t⟩, rfl⟩
   have hZ : Z ∈ L₀ := by rw [hrow₀]; exact Finset.mem_union_right _ hZinner
-  have hs₀N₁ : s₀.val ∈ N₁ := Finset.mem_erase.mpr
-    ⟨s₀.property, initialSegment_mono G (by omega) hs₀G⟩
-  have hs₀N₂ : s₀.val ∈ N₂ := Finset.mem_union_left _ (Finset.mem_erase.mpr
-    ⟨s₀.property, initialSegment_mono G (by omega) hs₀G⟩)
-  have hs₀Z : s₀.val ∉ Z := Finset.notMem_erase _ _
-  have hZN₁ : Z ≠ N₁ := by intro h; exact hs₀Z (h ▸ hs₀N₁)
-  have hZN₂ : Z ≠ N₂ := by intro h; exact hs₀Z (h ▸ hs₀N₂)
-  have hZout : Z ∉ crossingBarred L₀ B := by rw [hbar₀]; simp [hZN₁, hZN₂]
+  have htN₁ : t ∈ N₁ := Finset.mem_erase.mpr
+    ⟨hte.ne, initialSegment_mono G (by omega) htTop⟩
+  have htTp : t ∈ Tp := Finset.mem_insert_of_mem htTop
+  have htZ : t ∉ Z := Finset.notMem_erase _ _
+  have hZN₁ : Z ≠ N₁ := by intro h; exact htZ (h ▸ htN₁)
+  have hZTp : Z ≠ Tp := by intro h; exact htZ (h ▸ htTp)
+  have hZout : Z ∉ crossingBarred L₀ B := by rw [hbar₀]; simp [hZN₁, hZTp]
   let ip : Fin G.card := ⟨k, by omega⟩
-  let iq : Fin G.card := ⟨k + 1, by omega⟩
   let p := G.orderEmbOfFin rfl ip
-  let q := G.orderEmbOfFin rfl iq
   have hpG : p ∈ G := Finset.orderEmbOfFin_mem G rfl ip
-  have hqG : q ∈ G := Finset.orderEmbOfFin_mem G rfl iq
   have hpRank : groundRank G p = k := by
     simpa [p, ip] using groundRank_orderEmbOfFin G ip
-  have hqRank : groundRank G q = k + 1 := by
-    simpa [q, iq] using groundRank_orderEmbOfFin G iq
   have hep : e < p := lt_of_groundRank_lt_groundRank heG hpG (by omega)
   have hpTop : p ∈ initialSegment G (k + 2) :=
     mem_initialSegment_of_groundRank_lt hpG (by omega)
-  have hqTop : q ∈ initialSegment G (k + 2) :=
-    mem_initialSegment_of_groundRank_lt hqG (by omega)
-  have hpq : p ≠ q := by
+  have hpt : p ≠ t := by
     intro h
     have hr := congrArg (groundRank G) h
     omega
-  have hs₀Rank : groundRank G s₀.val < k - 1 := (Finset.mem_filter.mp hs₀G).2
-  have hps₀ : p ≠ s₀.val := by
+  have hpq₁ : p ≠ q₁ := by
     intro h
     have hr := congrArg (groundRank G) h
     omega
-  have hqs₀ : q ≠ s₀.val := by
-    intro h
-    have hr := congrArg (groundRank G) h
-    omega
-  have hpZ : p ∈ Z := by simp [Z, hep.ne', hps₀, hpTop]
-  have hqZ : q ∈ Z := by
-    have heq : e ≠ q := by
-      intro h
-      have hr := congrArg (groundRank G) h
-      omega
-    simp [Z, heq.symm, hqs₀, hqTop]
-  let V := insert e (Z.erase p)
-  have hqV : q ∈ V := by simp [V, hpq.symm, hqZ]
-  have hqNotUpper : q ∉ initialSegment G (k + 1) := by
+  have hpZ : p ∈ Z := by simp [Z, hep.ne', hpt, hpTop]
+  have hpCore : p ∉ initialSegment G (k - 2) := by
     intro h
     have := (Finset.mem_filter.mp h).2
     omega
-  have hVM₁ : V ≠ M₁ := by
+  have hInsertE : insert e (initialSegment G (k - 1)) = initialSegment G k := by
+    have harith : k - 1 + 1 = k := by omega
+    simpa [harith] using initialSegment_insert_eq_succ_of_top
+      (G := G) (e := e) (j := k - 1) (by omega)
+      (by simpa [harith] using heTop) hePrev
+  have hpK1 : p ∈ initialSegment G (k + 1) :=
+    mem_initialSegment_of_groundRank_lt hpG (by omega)
+  have hpNotK : p ∉ initialSegment G k := by
     intro h
-    exact hqNotUpper (initialSegment_mono G (by omega) (h ▸ hqV))
-  have hVM₂ : V ≠ M₂ := by
-    intro h
-    exact hqNotUpper (Finset.sdiff_subset (h ▸ hqV))
+    have := (Finset.mem_filter.mp h).2
+    omega
+  have hInsertP : insert p (initialSegment G k) = initialSegment G (k + 1) :=
+    initialSegment_insert_eq_succ_of_top (by omega) hpK1 hpNotK
+  have hq₁Top : q₁ ∈ initialSegment G (k + 2) :=
+    mem_initialSegment_of_groundRank_lt hq₁G (by omega)
+  have hInsertQ : insert q₁ (initialSegment G (k + 1)) = initialSegment G (k + 2) :=
+    initialSegment_insert_eq_succ_of_top (by omega) hq₁Top hq₁Out
+  have hDecomp :
+      insert q₁ (insert p (insert e (insert t (initialSegment G (k - 2))))) =
+        initialSegment G (k + 2) := by
+    rw [hInsertT, hInsertE, hInsertP, hInsertQ]
+  have heTail : e ∉ insert t (initialSegment G (k - 2)) := by
+    simp [hte.ne', heCore]
+  have htarget : insert e (Z.erase p) = Wp := by
+    change insert e (((((initialSegment G (k + 2)).erase e).erase t).erase p)) =
+      insert e (insert q₁ (initialSegment G (k - 2)))
+    rw [← hDecomp]
+    rw [Finset.erase_insert_of_ne heq₁.symm,
+      Finset.erase_insert_of_ne hep.ne', Finset.erase_insert heTail,
+      Finset.erase_insert_of_ne htq₁.symm, Finset.erase_insert_of_ne hpt,
+      Finset.erase_insert htCore, Finset.erase_insert_of_ne hpq₁.symm,
+      Finset.erase_insert hpCore]
   have hVbar := crossingFailure_up_source_mem_crossingBarred hF hfail hZ hZout hpZ hep
-  change V ∈ crossingBarred L₁ A at hVbar
-  rw [hbar₁] at hVbar
-  simp [hVM₁, hVM₂] at hVbar
+  rw [htarget] at hVbar
+  exact hWpOut hVbar
 
 /-! ### 8.4 The regime `e = k`: configuration (a) forces the exception -/
 

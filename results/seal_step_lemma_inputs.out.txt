@@ -1,0 +1,31 @@
+# pinned output of compute/seal_step_lemma_inputs.py, run 2026-09-07
+
+covered n=2, k=1: 2 shifted families in 0.000s
+covered n=3, k=1: 3 shifted families in 0.000s
+covered n=3, k=2: 3 shifted families in 0.000s
+covered n=4, k=1: 4 shifted families in 0.000s
+covered n=4, k=2: 7 shifted families in 0.000s
+covered n=4, k=3: 4 shifted families in 0.000s
+covered n=5, k=1: 5 shifted families in 0.000s
+covered n=5, k=2: 15 shifted families in 0.003s
+covered n=5, k=3: 15 shifted families in 0.003s
+covered n=5, k=4: 5 shifted families in 0.000s
+covered n=6, k=1: 6 shifted families in 0.000s
+covered n=6, k=2: 31 shifted families in 0.013s
+covered n=6, k=3: 65 shifted families in 0.051s
+covered n=6, k=4: 31 shifted families in 0.012s
+covered n=6, k=5: 6 shifted families in 0.000s
+covered n=7, k=1: 7 shifted families in 0.001s
+covered n=7, k=2: 63 shifted families in 0.054s
+covered n=7, k=3: 351 shifted families in 1.108s
+covered n=7, k=4: 351 shifted families in 1.142s
+covered n=7, k=5: 63 shifted families in 0.058s
+covered n=7, k=6: 7 shifted families in 0.001s
+covered n=8, k=1: 8 shifted families in 0.000s
+covered n=8, k=2: 127 shifted families in 0.007s
+covered n=8, k=3: 2430 shifted families in 0.404s
+covered n=8, k=4: 9303 shifted families in 2.288s
+covered n=8, k=5: 2430 shifted families in 0.464s
+covered n=8, k=6: 127 shifted families in 0.011s
+covered n=8, k=7: 8 shifted families in 0.000s
+PASS: 0 violations; JSON=/home/jbaggett/combinatorics/topics/flipgraphs/realization/compute/data/seal_step_lemma_inputs_2026_08_15.json; report=/home/jbaggett/combinatorics/topics/flipgraphs/realization/SEAL_STEP_LEMMA_INPUTS_2026-08-15.md

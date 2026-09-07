@@ -1,0 +1,29 @@
+   n=2 k=1: 2 shifted families
+n= 2 cumulative: 2 families, 0 bad templates (graph), 0 hooks (coords), 2 ordered pairs, 2 step instances   [7.7 exhaustive: yes]
+   n=3 k=1: 3 shifted families
+   n=3 k=2: 3 shifted families
+n= 3 cumulative: 8 families, 0 bad templates (graph), 0 hooks (coords), 18 ordered pairs, 18 step instances   [7.7 exhaustive: yes]
+   n=4 k=1: 4 shifted families
+   n=4 k=2: 7 shifted families
+   n=4 k=3: 4 shifted families
+n= 4 cumulative: 23 families, 1 bad templates (graph), 1 hooks (coords), 134 ordered pairs, 144 step instances   [7.7 exhaustive: yes]
+   n=5 k=1: 5 shifted families
+   n=5 k=2: 15 shifted families
+   n=5 k=3: 15 shifted families
+   n=5 k=4: 5 shifted families
+n= 5 cumulative: 63 families, 5 bad templates (graph), 5 hooks (coords), 1094 ordered pairs, 1336 step instances   [7.7 exhaustive: yes]
+   n=6 k=1: 6 shifted families
+   n=6 k=2: 31 shifted families
+   n=6 k=3: 65 shifted families
+   n=6 k=4: 31 shifted families
+   n=6 k=5: 6 shifted families
+n= 6 cumulative: 202 families, 15 bad templates (graph), 15 hooks (coords), 12494 ordered pairs, 17670 step instances   [7.7 exhaustive: yes]
+
+families                  : 202
+bad templates, graph-side : 15
+hooks, coordinate-side    : 15
+THEOREM 7.6 disagreements : 0
+THEOREM 7.7 violations    : 0   (over 12494 ordered pairs)
+THEOREM 7.11 violations   : 0   (over 17670 instances)
+
+SEAL CLEAN

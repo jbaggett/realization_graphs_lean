@@ -6,7 +6,7 @@ sequences*. It proves, in Lean 4 against mathlib, that
 > the realization graph `G(d)` of every graphical degree sequence is **maximally Hamiltonian** —
 > Hamilton-laceable when it is bipartite and Hamilton-connected otherwise.
 
-That is `realizationGraph_maximally_hamiltonian` in `BrualdiLean/RealizationGraph/SBPlusOrd.lean`.
+That is `realizationGraph_maximally_hamiltonian` in `Realization/SBPlusOrd.lean`.
 It is unconditional, carries no `sorry`, and its axiom trace is the ambient foundations
 `propext`, `Classical.choice`, `Quot.sound` together with **seven cited results from the literature
 and nothing else**.
@@ -24,11 +24,16 @@ ulimit -v 67108864          # 64 GiB of ADDRESS SPACE, in KiB.  Not optional: wi
                             # not memory — peak RSS on this build is about 3.3 GB — so raising it
                             # does not raise your OOM risk, and lowering the thread count instead
                             # makes the problem worse.
+lake exe cache get            # FETCH MATHLIB'S PREBUILT CACHE FIRST.  `lake build` does not do
+                              # this for you: without it, Lake compiles mathlib from source, which
+                              # is hours instead of the seventeen seconds the cache takes.  There
+                              # is no warning; it simply starts building and does not stop.
 LEAN_NUM_THREADS=6 lake build Realization
 ```
 
 `lake -j` does not exist in Lake 5.0.0 and `lake -Kjobs=N` silently does nothing; `LEAN_NUM_THREADS`
-is the knob. A clean build fetches mathlib and the companion development and takes a while.
+is the knob. With the cache fetched, the remaining work is the companion development and this
+paper's 25 modules.
 
 **A pass is `exit 0` AND the expected `.olean` on disk.** A bare green is not a gate: a root file
 once failed to import a module and `lake build` stayed green while errors accumulated behind it.
@@ -48,27 +53,47 @@ RESULT: PASS — the surface is what the generator says it is.
 ```
 
 The three strata are reported separately and **are never summed**; the paper's Section 11 says so and
-this gate enforces it. `check_axiom_provenance.py` joins each cited axiom to the bibliography and to
-Section 10.4. `check_qstar_note_axioms.py` checks that Section 7's development charges no cited axiom
-of any kind.
+this gate enforces it.
+
+```bash
+python3 compute/check_qstar_note_axioms.py
+```
+
+checks the other claim Section 11.1 makes about the kernel — that Section 7's development charges no
+cited axiom of any kind — over all 46 of its declarations.
+
+Both gates detect which layout they are in. Two others that ship in the authors' tree are **not**
+here: `check_axiom_provenance.py` reads the manuscript's section sources and
+`check_trust_surface_pointers.py` reads `TRUST_SURFACE.md`, and neither document belongs in this
+repository. They were removed rather than shipped inert — a gate that cannot run, inside a
+verification artifact, is worse than no gate.
 
 ## How this repository is put together
 
 ```
-BrualdiLean/RealizationGraph/   the 23 modules of this paper
-compute/                        the axiom-baseline generator and the gates that read it
-results/                        pinned outputs of those gates
-lakefile.toml                   one library target; a pinned require on the companion
+Realization/      the 25 modules of this paper
+compute/          the axiom-baseline generator, the gates that read it, and the scripts
+                  behind every number the paper prints
+results/          pinned outputs of those gates and scripts
+lakefile.toml     one library target; a pinned require on the companion
 ```
+
+⚠ **The modules are `Realization.*` here and `BrualdiLean.RealizationGraph.*` in the authors' working
+tree, and the difference is forced.** `brualdi_lean` is a dependency, and it declares a library that
+owns the whole `BrualdiLean` module namespace; two packages cannot both own it, and while ours tried
+to, this repository did not build at all — every module resolved against the dependency's source
+directory, which does not contain them. Lean namespaces are independent of module paths, so
+`namespace Brualdi.RealizationGraph` is untouched: **every declaration name, and therefore every
+axiom trace the paper cites, is the same on both sides.** Only `import` lines differ.
 
 **The companion development is a pinned dependency, not a vendored copy.** The `require` in
 `lakefile.toml` points at `brualdi-interchange-lean` at tag `arxiv-v3`, which is the artifact that
 paper's own arXiv submission cites. Depending rather than copying links two papers to one immutable
-object instead of creating a second, keeps provenance legible — a reader sees which 23 modules are
+object instead of creating a second, keeps provenance legible — a reader sees which 25 modules are
 this paper's rather than hunting through 78,000 lines for them — and records *which version this
 paper was verified against*, which a copy silently loses the moment either side is corrected.
 
-The import closure is **41 modules, about 78,000 lines**: 23 here and 18 from the companion, and
+The import closure is **43 modules, about 78,000 lines**: 25 here and 18 from the companion, and
 those 18 are exactly that paper's frozen closure.
 
 The companion repository is **public**, so this dependency resolves for anyone; no credentials are
@@ -79,6 +104,33 @@ lose the tag and the build stops reproducing. That is a real risk on the horizon
 artifact is for. A self-contained frozen snapshot — every dependency vendored at its pinned revision,
 buildable with no network beyond the toolchain — is what the paper should cite for archival, and it
 is not cut yet.
+
+## The scripts behind the printed numbers
+
+Section 11.4 of the paper says the scripts that produced the numbers quoted there are in this
+repository. They are in `compute/`, alongside the Lean gates, and `results/README.md` maps each one
+to the sentence it supports and holds its pinned output.
+
+Four of them the paper names by path, so they are here under exactly those names:
+`sec10_walkthrough_build.py`, `sec10_walkthrough_instance_sweep.py`, `sec63_witnesses.py` and
+`sec64_two_active_lines_seal.py`. The rest support Section 11.2's five computational claims,
+Section 11.3's census and Section 11.4's independent reproduction.
+
+Each script re-derives its object rather than reading a stored answer, and most refuse to report
+success unless their own checks pass — `sec10_walkthrough_build.py`, for instance, runs Section
+10.2's construction step by step and will not emit unless the result really is a Hamilton
+`G_0`--`G_1` path of `G(d)`.
+
+**Two of them need `numpy` and `scipy`** (`skeleton_test.py`, for the polytope skeleton). The others
+need only the standard library. Paths are derived from each script's own location, so they run from a
+clone; where a script writes structured output it goes to `compute/data/`, which is not tracked.
+
+⚠ **One claim's script did not exist until this deposit.** Section 11.2's "the running example is the
+smallest of its kind" had been verified during a 2026-09-06 accuracy pass and recorded in prose,
+which is not the same as being reproducible. `sec11_yfamily_census.py` was written for this
+repository: it enumerates the realizations from scratch, applies the same bad-template predicate the
+Section 7 seals use, and refuses to emit unless it reproduces both the counts and all four
+order-six witnesses the paper prints. It does.
 
 ## How the Lean differs from the printed proof
 
@@ -100,7 +152,7 @@ Theorem 7.6, where §7.6's prose describes the obstruction half as "Lemma 7.4 to
 **Lemma 7.10, the arm-exchange clause.** The paper says *"the two arms exchanged: the inner arm of `F`
 maps onto the outer arm of `F*`."* **No declaration states that.** What is proved is the containment
 identity the clause is derived from — `X ⊆ u ∪ v ↔ dualSet u ∩ dualSet v ⊆ dualSet X` — together with
-the fact, supplied inline in §7.10's proof and not formalized, that inner-arm membership *is*
+the fact, supplied inline in Lemma 7.10's proof and not formalized, that inner-arm membership *is*
 `X ⊆ u ∪ v` and outer-arm membership *is* `X* ⊇ u* ∩ v*`. Nothing in the tree relates `yInnerArm` or
 `yOuterArm` to the duality. *Found 2026-08-24 by a blind back-translation; the gate's labels were
 corrected to claim the identity rather than the clause.*
@@ -163,6 +215,23 @@ the theorem by a different argument than the paper printed. **Resolved 2026-08-2
 rewriting the prose to the argument the kernel checks**, on the reasoning that there is no reason for
 the printed route and the checked route to differ. The two Hall engines it would have needed remain in
 the tree, unconsumed.
+
+### Two proofs were shortened after the first push, and the surface did not move
+
+`QStar.lean` and `SBPlusOrd.lean` here carry shorter internal proofs than the versions pushed on
+2026-08-28, and two modules are new: `EqualityCase.lean` and `TightUnion.lean`. The substantive
+change is Lemma 8.3d. It propagated a lower Erdős–Gallai witness upward by a slack recurrence on the
+sorted degree sequence — the paper's longest internal argument — and it now argues instead that a
+union of equal-sized tight sets whose vertices all have degree at least that size is itself tight,
+which reaches the larger prefix in one step. The manuscript prints the second argument, so the
+development had to as well.
+
+**Nothing about what is proved changed, and that was checked rather than assumed.** Two gates compare
+the shortened development against the one it replaces: one reads the axiom trace of every audited
+declaration, the other `#check`s every one and compares the printed type. Both report the same 115
+declarations, the same axioms declaration for declaration, and — this is the half a name-and-axiom
+comparison cannot see — the same statements. A dropped hypothesis keeps a theorem's name and its
+axioms, so only the type comparison rules one out.
 
 ### What is not machine-checked at all
 
@@ -260,7 +329,7 @@ matroid/base route, whose modules were parked in `ParkedBaseStructure` on 2026-0
 manuscript does not take. **There is no undischarged obligation and nothing to disclose.**
 
 **The reference was not invented, and the reason is worth keeping.**
-`lean/BrualdiLean/RealizationGraph/InterfaceSaturation.lean` — the module carrying §5.4 — was *titled*
+`lean/Realization/InterfaceSaturation.lean` — the module carrying §5.4 — was *titled*
 "Interface saturation (E3-sat)" and still contains that route's apparatus: `edge_component_biregular`,
 `edgeFreeComponent_support_eq_singleton`, `leftPart`/`rightPart`, and `biregular_matching`, the last
 being E3-sat's statement in general form, still labelled "Item 5". **All four are consumed by
