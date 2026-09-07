@@ -1,4 +1,9 @@
 /-
+Copyright (c) 2026 Jeffrey S. Baggett. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Jeffrey S. Baggett
+-/
+/-
 `TightUnion.lean` — **the tight-union lemma for Erdős–Gallai tight sets.**
 
 WHY THIS FILE EXISTS.  Lemma 8.3d of `Paper-realization` propagates a lower Erdős–Gallai
