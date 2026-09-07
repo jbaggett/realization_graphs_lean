@@ -42,6 +42,22 @@ ground order seven, and it comes from `seal_step_lemma_inputs.py`, whose per-ord
 409,456 = 409,416 + 40 at `n = 7` and sums to the cumulative 427,156. `layer_calib7` is behind no
 number the paper prints and is not shipped.
 
+### §11.2's rank-two claim, checked two ways
+
+`qstar_rank2_base.py` sweeps every rank-two shifted family on `[n]` and every pair in it, deciding
+Hamilton-connectivity by exact DFS. The sweep over `[8]` is a long run, so both halves of the
+paper's sentence — *"on the ground `[8]` alone, at rank two, five non-Hamiltonian pairs among
+13,888"* — were also checked directly, and agree:
+
+* **13,888.** `enum_rank2(8)` returns the 126 rank-two shifted families with at least two members
+  (it filters `|F| ≥ 2`, since a one-member family has no pair to test; the 127th nonempty family is
+  that singleton). Those 126 contribute exactly **13,888** unordered pairs.
+* **Five.** The exceptions all have the shape `F = {12, 13, 23, 14, …, 1r}` at the pair `{12,13}`.
+  Six such families exist on `[8]`, for `r = 3, …, 8`, and brute force over all orderings finds a
+  Hamilton path in exactly one of them: `r = 3`, where `F = {12,13,23}` and `J(F) = K_3`, which is
+  Hamilton-connected. The other five have none. That is why the count is five and not six, and it is
+  the same reason a Y-family is required to have at least four members.
+
 ## What is NOT pinned here, and why
 
 Two scripts are shipped without a pinned output because re-running them is a long job rather than a
